@@ -15,10 +15,8 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v4
 
       - name: Install dependencies
         run: poetry install
