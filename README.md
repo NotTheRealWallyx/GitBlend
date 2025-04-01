@@ -2,6 +2,8 @@
 
 GitBlend is a Git utility tool that combines Git and GitHub commands to streamline your workflow. It provides a simple CLI interface for managing Git operations, such as deleting tags both locally and remotely.
 
+![Description of the image](assets/images/gitblend_image.png)
+
 ## Features
 
 - **Delete Git Tags**: Easily delete Git tags locally and remotely with a single command.
@@ -24,7 +26,7 @@ git clone https://github.com/mikelsanchez/GitBlend.git
 cd GitBlend
 ```
 
-1. Run the installation script:
+2. Run the installation script:
 
 ```bash
 ./install.sh
