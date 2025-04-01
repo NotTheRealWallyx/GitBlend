@@ -1,8 +1,10 @@
 # GitBlend
 
-GitBlend is a Git utility tool that combines Git and GitHub commands to streamline your workflow. It provides a simple CLI interface for managing Git operations, such as deleting tags both locally and remotely.
+[![Run pytest](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml)
 
-![Description of the image](assets/images/gitblend_image.png)
+![GitBlend image](assets/images/gitblend_image.png)
+
+GitBlend is a Git utility tool that combines Git and GitHub commands to streamline your workflow. It provides a simple CLI interface for managing Git operations, such as deleting tags both locally and remotely.
 
 ## Features
 
