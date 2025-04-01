@@ -21,6 +21,3 @@ def main():
     else:
         parser.print_help()
         sys.exit(1)
-
-if __name__ == "__main__":
-    main()
