@@ -24,7 +24,7 @@ git clone https://github.com/mikelsanchez/GitBlend.git
 cd GitBlend
 ```
 
-1. Run the installation script:
+2. Run the installation script:
 
 ```bash
 ./install.sh
