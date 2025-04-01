@@ -1,7 +1,6 @@
 # Description
 
-- **What is this PR for?**  
-  _Provide a brief summary of the purpose of this PR. Explain what the changes are, what problem they solve, or what feature they add._
+_Provide a brief summary of the purpose of this PR. Explain what the changes are, what problem they solve, or what feature they add._
 
 # Type of Change
 
