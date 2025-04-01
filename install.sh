@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Step 1: Extract version from pyproject.toml
 VERSION=$(grep '^version' pyproject.toml | awk -F= '{print $2}' | tr -d ' "')
 
 if [ -z "$VERSION" ]; then
@@ -8,12 +7,10 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
-# Step 2: Define the package path
 PACKAGE_NAME="gitblend"
 PACKAGE_PATH="dist/$PACKAGE_NAME-$VERSION.tar.gz"
 DIST_DIR="dist"
 
-# Step 3: Build the package using Poetry
 echo "Building the package using Poetry..."
 poetry build
 
@@ -23,7 +20,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Step 4: Check if pipx is installed
 if ! command -v pipx &> /dev/null; then
   echo "pipx is not installed. Installing pipx via Homebrew..."
   brew install pipx
@@ -35,7 +31,6 @@ if ! command -v pipx &> /dev/null; then
   fi
 fi
 
-# Step 5: Install the package using pipx
 echo "Installing $PACKAGE_NAME version $VERSION with pipx..."
 
 # Use pipx to install, pointing to the .tar.gz file
@@ -49,7 +44,6 @@ else
   exit 1
 fi
 
-# Clean up (optional)
 echo "Cleaning up..."
 rm -rf $DIST_DIR
 

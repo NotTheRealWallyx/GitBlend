@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Step 1: Extract version from pyproject.toml
 VERSION=$(grep '^version' pyproject.toml | awk -F= '{print $2}' | tr -d ' "')
 
 if [ -z "$VERSION" ]; then
@@ -10,13 +9,11 @@ fi
 
 PACKAGE_NAME="gitblend"
 
-# Step 2: Check if pipx is installed
 if ! command -v pipx &> /dev/null; then
   echo "Error: pipx is not installed. Please install pipx and try again."
   exit 1
 fi
 
-# Step 3: Uninstall the package using pipx
 echo "Uninstalling $PACKAGE_NAME version $VERSION with pipx..."
 
 pipx uninstall $PACKAGE_NAME
@@ -29,7 +26,6 @@ else
   exit 1
 fi
 
-# Optional: Clean up any residual files in dist/ (not strictly necessary if build files were removed earlier)
 echo "Cleaning up residual build files..."
 
 DIST_DIR="dist"
@@ -40,5 +36,4 @@ else
   echo "No residual build files to clean up."
 fi
 
-# Final verification
 echo "Uninstallation completed."
