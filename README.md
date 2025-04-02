@@ -41,26 +41,13 @@ This script will:
 
 ## Usage
 
-After installation, you can use the `gitblend` command from your terminal.
+After installation, you can use the `gitblend` command from your terminal, followed by the desired command.
 
-### Delete a Git Tag
+### Available Commands
 
-To delete a Git tag both locally and remotely, use the `delete-tag` command:
-
-```bash
-gitblend delete-tag <tag-name>
-```
-
-For example:
-
-```bash
-gitblend delete-tag v1.0.0
-```
-
-This will:
-
-1. Delete the tag locally.
-1. Delete the tag from the remote repository.
+- `gitblend list-tags`: List all Git tags in the current repository.
+- `gitblend delete-tag <tag_name>`: Delete a Git tag both locally and remotely.
+- `gitblend --help`: Show help information for the GitBlend CLI.
 
 ## Uninstallation
 
