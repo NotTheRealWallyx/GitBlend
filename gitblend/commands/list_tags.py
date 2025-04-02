@@ -1,25 +1,17 @@
-import sys
-from git import Repo, InvalidGitRepositoryError, GitCommandError
+from git import Repo
+from gitblend.utils import handle_git_errors
 
 
+@handle_git_errors
 def run(args):
     """List all Git tags."""
-    try:
-        repo = Repo(search_parent_directories=True)
+    repo = Repo(search_parent_directories=True)
 
-        # Get all tags
-        tags = repo.tags
-        if tags:
-            print("📋 Git Tags:")
-            for tag in tags:
-                print(tag.name)
-        else:
-            print("No tags found in the repository.")
-
-    except InvalidGitRepositoryError:
-        print("❌ Error: Not inside a valid Git repository.", file=sys.stderr)
-        sys.exit(1)
-
-    except GitCommandError as e:
-        print(f"❌ Git command error: {e}", file=sys.stderr)
-        sys.exit(1)
+    # Get all tags
+    tags = repo.tags
+    if tags:
+        print("📋 Git Tags:")
+        for tag in tags:
+            print(tag.name)
+    else:
+        print("No tags found in the repository.")
