@@ -11,7 +11,6 @@ def mock_repo(mocker):
 
 def test_list_tags_success(mock_repo):
     """Test listing tags successfully."""
-    # Mock the Repo object and its tags
     mock_repo_instance = mock_repo.return_value
     mock_repo_instance.tags = [
         type("Tag", (object,), {"name": "v1.0.0"}),
@@ -27,7 +26,6 @@ def test_list_tags_success(mock_repo):
 
 def test_list_tags_no_tags(mock_repo):
     """Test listing tags when no tags exist."""
-    # Mock the Repo object with no tags
     mock_repo_instance = mock_repo.return_value
     mock_repo_instance.tags = []
 
@@ -40,7 +38,6 @@ def test_list_tags_no_tags(mock_repo):
 
 def test_list_tags_invalid_repo(mock_repo):
     """Test when the current directory is not a valid Git repository."""
-    # Mock Repo to raise InvalidGitRepositoryError
     mock_repo.side_effect = InvalidGitRepositoryError("Invalid repository")
 
     args = type("Args", (object,), {})
@@ -53,7 +50,6 @@ def test_list_tags_invalid_repo(mock_repo):
 
 def test_list_tags_git_command_error(mock_repo):
     """Test when a Git command error occurs."""
-    # Mock Repo to raise GitCommandError
     mock_repo.side_effect = GitCommandError("git tag", "Error")
 
     args = type("Args", (object,), {})
