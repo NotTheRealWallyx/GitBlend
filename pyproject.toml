@@ -14,6 +14,8 @@ gitblend = "gitblend.cli:main"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0"
 pytest-mock = "^3.10"
+black = "^25.1.0"
+pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
