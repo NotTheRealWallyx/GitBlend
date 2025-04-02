@@ -1,19 +1,25 @@
-import subprocess
 import sys
+from git import Repo, InvalidGitRepositoryError, GitCommandError
 
 
 def run(args):
     """List all Git tags."""
     try:
-        result = subprocess.run(
-            ["git", "tag"], check=True, text=True, capture_output=True
-        )
-        tags = result.stdout.strip()
+        repo = Repo(search_parent_directories=True)
+
+        # Get all tags
+        tags = repo.tags
         if tags:
             print("📋 Git Tags:")
-            print(tags)
+            for tag in tags:
+                print(tag.name)
         else:
             print("No tags found in the repository.")
-    except subprocess.CalledProcessError:
-        print("❌ Failed to list Git tags.")
+
+    except InvalidGitRepositoryError:
+        print("❌ Error: Not inside a valid Git repository.", file=sys.stderr)
+        sys.exit(1)
+
+    except GitCommandError as e:
+        print(f"❌ Git command error: {e}", file=sys.stderr)
         sys.exit(1)
