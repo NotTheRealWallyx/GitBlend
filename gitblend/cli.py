@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from gitblend.commands import delete_tag, list_tags  # Import the new command
+from gitblend.commands import delete_tag, list_tags
 
 
 def main():
