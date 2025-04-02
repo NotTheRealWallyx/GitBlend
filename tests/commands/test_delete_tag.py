@@ -1,36 +1,52 @@
 import pytest
-import subprocess
+from git import GitCommandError, InvalidGitRepositoryError
 from gitblend.commands import delete_tag
 
 
-# Mock subprocess.run so we don't actually run git commands
 @pytest.fixture
-def mock_subprocess_run(mocker):
-    return mocker.patch("subprocess.run")
+def mock_repo(mocker):
+    """Mock the Repo object from GitPython."""
+    return mocker.patch("gitblend.commands.delete_tag.Repo")
 
 
-def test_delete_tag_success(mock_subprocess_run):
+def test_delete_tag_success(mock_repo, mocker):
     """Test deleting a tag successfully."""
-    mock_subprocess_run.return_value = subprocess.CompletedProcess(
-        args=[], returncode=0
-    )
+    mock_repo_instance = mock_repo.return_value
+    mock_repo_instance.tags = ["v1.0.0"]
+    mock_repo_instance.delete_tag = mocker.Mock()
+    mock_repo_instance.git.push = mocker.Mock()
 
     args = type("Args", (object,), {"tag": "v1.0.0"})
     delete_tag.run(args)
 
-    mock_subprocess_run.assert_any_call(
-        ["git", "tag", "-d", "v1.0.0"], check=True
-    )
-    mock_subprocess_run.assert_any_call(
-        ["git", "push", "--delete", "origin", "v1.0.0"], check=True
-    )
+    # Assert the local tag was deleted
+    mock_repo_instance.delete_tag.assert_called_once_with("v1.0.0")
+    # Assert the remote tag was deleted
+    mock_repo_instance.git.push.assert_called_once_with("origin", ":refs/tags/v1.0.0")
 
 
-def test_delete_tag_local_fail(mocker):
-    """Test when deleting the local tag fails."""
-    mocker.patch(
-        "subprocess.run",
-        side_effect=[subprocess.CalledProcessError(1, "git tag -d")],
+def test_delete_tag_local_fail(mock_repo, mocker):
+    """Test when the local tag does not exist."""
+    mock_repo_instance = mock_repo.return_value
+    mock_repo_instance.tags = []
+    mock_repo_instance.delete_tag = mocker.Mock()
+
+    args = type("Args", (object,), {"tag": "v1.0.0"})
+
+    with pytest.raises(SystemExit) as e:
+        delete_tag.run(args)
+
+    assert e.value.code == 1
+    mock_repo_instance.delete_tag.assert_not_called()
+
+
+def test_delete_tag_remote_fail(mock_repo, mocker):
+    """Test when deleting the remote tag fails."""
+    mock_repo_instance = mock_repo.return_value
+    mock_repo_instance.tags = ["v1.0.0"]
+    mock_repo_instance.delete_tag = mocker.Mock()
+    mock_repo_instance.git.push = mocker.Mock(
+        side_effect=GitCommandError("push", "Error")
     )
 
     args = type("Args", (object,), {"tag": "v1.0.0"})
@@ -39,16 +55,15 @@ def test_delete_tag_local_fail(mocker):
         delete_tag.run(args)
 
     assert e.value.code == 1
+    mock_repo_instance.delete_tag.assert_called_once_with("v1.0.0")
+    mock_repo_instance.git.push.assert_called_once_with("origin", ":refs/tags/v1.0.0")
 
 
-def test_delete_tag_remote_fail(mocker):
-    """Test when deleting the remote tag fails."""
+def test_invalid_git_repository(mocker):
+    """Test when the current directory is not a valid Git repository."""
     mocker.patch(
-        "subprocess.run",
-        side_effect=[
-            subprocess.CompletedProcess(args=[], returncode=0),
-            subprocess.CalledProcessError(1, "git push --delete origin"),
-        ],
+        "gitblend.commands.delete_tag.Repo",
+        side_effect=InvalidGitRepositoryError("Invalid repository"),
     )
 
     args = type("Args", (object,), {"tag": "v1.0.0"})
