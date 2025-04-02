@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import sys
 from gitblend.commands import delete_tag, list_tags
