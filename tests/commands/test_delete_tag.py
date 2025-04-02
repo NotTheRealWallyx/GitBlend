@@ -1,5 +1,5 @@
 import pytest
-from git import GitCommandError
+from git import GitCommandError, InvalidGitRepositoryError
 from gitblend.commands import delete_tag
 
 
@@ -11,7 +11,6 @@ def mock_repo(mocker):
 
 def test_delete_tag_success(mock_repo, mocker):
     """Test deleting a tag successfully."""
-    # Mock the Repo object and its methods
     mock_repo_instance = mock_repo.return_value
     mock_repo_instance.tags = ["v1.0.0"]
     mock_repo_instance.delete_tag = mocker.Mock()
@@ -28,7 +27,6 @@ def test_delete_tag_success(mock_repo, mocker):
 
 def test_delete_tag_local_fail(mock_repo, mocker):
     """Test when the local tag does not exist."""
-    # Mock the Repo object and its methods
     mock_repo_instance = mock_repo.return_value
     mock_repo_instance.tags = []
     mock_repo_instance.delete_tag = mocker.Mock()
@@ -44,7 +42,6 @@ def test_delete_tag_local_fail(mock_repo, mocker):
 
 def test_delete_tag_remote_fail(mock_repo, mocker):
     """Test when deleting the remote tag fails."""
-    # Mock the Repo object and its methods
     mock_repo_instance = mock_repo.return_value
     mock_repo_instance.tags = ["v1.0.0"]
     mock_repo_instance.delete_tag = mocker.Mock()
@@ -66,7 +63,7 @@ def test_invalid_git_repository(mocker):
     """Test when the current directory is not a valid Git repository."""
     mocker.patch(
         "gitblend.commands.delete_tag.Repo",
-        side_effect=Exception("Invalid repository"),
+        side_effect=InvalidGitRepositoryError("Invalid repository"),
     )
 
     args = type("Args", (object,), {"tag": "v1.0.0"})
