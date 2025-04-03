@@ -16,10 +16,7 @@ fi
 
 echo "Uninstalling $PACKAGE_NAME version $VERSION with pipx..."
 
-pipx uninstall $PACKAGE_NAME
-
-# Verify successful uninstallation
-if [ $? -eq 0 ]; then
+if pipx uninstall $PACKAGE_NAME then
   echo "$PACKAGE_NAME version $VERSION uninstalled successfully with pipx."
 else
   echo "Failed to uninstall $PACKAGE_NAME version $VERSION with pipx."
