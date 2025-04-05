@@ -15,7 +15,7 @@ GitBlend is a Git utility tool that combines Git and GitHub commands to streamli
 
 ### Prerequisites
 
-- Python 3.7 or higher
+- Python 3.9 or higher
 - [Poetry](https://python-poetry.org/) for dependency management
 - [pipx](https://pypa.github.io/pipx/) for isolated Python package installations
 
