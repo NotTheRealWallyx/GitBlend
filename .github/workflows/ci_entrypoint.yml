@@ -8,13 +8,7 @@ jobs:
 
     steps:
       - name: Trigger Test Workflow
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: check_test.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: ./.github/workflows/check_test.yml
 
       - name: Trigger Installer Workflow
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: test_installer.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: ./.github/workflows/test_installer.yml
