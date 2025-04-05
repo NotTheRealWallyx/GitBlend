@@ -3,14 +3,10 @@ name: CI Entrypoint
 on: push
 
 jobs:
-  trigger-workflows:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  run-tests:
+    uses: ./.github/workflows/check_test.yml
 
-      - name: Trigger Test Workflow
-        uses: ./.github/workflows/check_test.yml
-
-      - name: Trigger Installer Workflow
-        uses: ./.github/workflows/test_installer.yml
+  run-installer:
+    needs: run-tests
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/test_installer.yml

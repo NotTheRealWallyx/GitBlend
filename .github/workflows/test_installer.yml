@@ -12,7 +12,6 @@ on: [workflow_call, workflow_dispatch]
 jobs:
   test-install-uninstall:
     runs-on: ${{ matrix.os }}
-    if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
