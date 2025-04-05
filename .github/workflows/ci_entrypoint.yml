@@ -1,0 +1,20 @@
+name: CI Entrypoint
+
+on: push
+
+jobs:
+  trigger-workflows:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Test Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: check_test.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Installer Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: test_installer.yml
+          token: ${{ secrets.GITHUB_TOKEN }}

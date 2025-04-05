@@ -7,11 +7,12 @@ name: Test Installer and Uninstaller
 #     branches: [main]
 #   workflow_dispatch:
 
-on: push
+on: workflow_dispatch
 
 jobs:
   test-install-uninstall:
     runs-on: ${{ matrix.os }}
+    if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
