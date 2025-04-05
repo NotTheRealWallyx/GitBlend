@@ -6,7 +6,7 @@ authors = ["Mikel Sanchez"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
+python = ">=3.9"
 gitpython = "^3.1.44"
 
 [tool.poetry.scripts]

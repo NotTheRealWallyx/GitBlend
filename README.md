@@ -1,6 +1,6 @@
 # GitBlend
 
-[![Run pytest](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml) [![CodeFactor](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend/badge)](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend)
+[![Run pytest](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/ci_entrypoint.yml) [![CodeFactor](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend/badge)](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend)
 
 ![GitBlend image](assets/images/gitblend_image.png)
 
@@ -15,7 +15,7 @@ GitBlend is a Git utility tool that combines Git and GitHub commands to streamli
 
 ### Prerequisites
 
-- Python 3.7 or higher
+- Python 3.9 or higher
 - [Poetry](https://python-poetry.org/) for dependency management
 - [pipx](https://pypa.github.io/pipx/) for isolated Python package installations
 

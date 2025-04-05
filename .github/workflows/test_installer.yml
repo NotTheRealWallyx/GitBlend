@@ -1,0 +1,75 @@
+name: Test Installer and Uninstaller
+
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+#   workflow_dispatch:
+
+on: [workflow_call, workflow_dispatch]
+
+jobs:
+  test-install-uninstall:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Set up Python and Poetry
+        uses: abatilo/actions-poetry@v4
+        with:
+          poetry-version: '1.8.2'
+
+      - name: Install pipx (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pipx
+          python3 -m pipx ensurepath
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Install pipx (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install pipx
+          pipx ensurepath
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Make scripts executable
+        run: |
+          chmod +x ./install.sh
+          chmod +x ./uninstall.sh
+
+      - name: Run installer script
+        run: ./install.sh
+
+      - name: Verify installation
+        run: |
+          if ! pipx list | grep -q gitblend; then
+            echo "Package was not installed."
+            exit 1
+          else
+            echo "Package is installed."
+          fi
+
+      - name: Run uninstaller script
+        run: ./uninstall.sh
+
+      - name: Verify uninstallation
+        run: |
+          if pipx list | grep -q gitblend; then
+            echo "Package was not uninstalled."
+            exit 1
+          else
+            echo "Package is uninstalled."
+          fi
