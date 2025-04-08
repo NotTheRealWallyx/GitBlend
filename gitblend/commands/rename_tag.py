@@ -7,6 +7,8 @@ def run(args):
     new_tag = args.new_tag
 
     try:
+
+        print(f"🔄 Renaming tag '{old_tag}' to '{new_tag}'...")
         delete_tag.run(args)
 
         args.tag = new_tag
@@ -14,4 +16,4 @@ def run(args):
 
         print(f"✅ Tag '{old_tag}' has been renamed to '{new_tag}' successfully.")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}")
