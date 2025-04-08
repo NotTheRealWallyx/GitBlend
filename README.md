@@ -48,6 +48,7 @@ After installation, you can use the `gitblend` command from your terminal, follo
 - `gitblend list-tags`: List all Git tags in the current repository.
 - `gitblend create-tag <tag_name> --message "<tag_message>" [--push]`: Create a new Git tag with an optional push to the remote repository.
 - `gitblend delete-tag <tag_name>`: Delete a Git tag both locally and remotely.
+- `gitblend rename-tag <old_tag> <new_tag>`: Rename an existing Git tag both locally and remotely.
 - `gitblend --help`: Show help information for the GitBlend CLI.
 
 ## Uninstallation
