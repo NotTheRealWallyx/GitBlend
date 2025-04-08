@@ -56,6 +56,11 @@ def add_update_all_command(subparsers):
         type=str,
         help="The starting path to search for repositories (default: home directory)",
     )
+    update_all_parser.add_argument(
+        "--only-clean",
+        action="store_true",
+        help="Only update repositories that are on main and have no uncommitted changes",
+    )
     update_all_parser.set_defaults(func=update_all.run)
 
 

@@ -17,6 +17,7 @@ def find_git_repos(start_path):
 def run(args):
     """Update all Git repositories on the computer."""
     start_path = args.path or os.path.expanduser("~")  # Ensure default path is set
+    only_clean = args.only_clean
     print(f"🔍 Searching for Git repositories in {start_path}...")
 
     git_repos = find_git_repos(start_path)
@@ -34,6 +35,11 @@ def run(args):
 
             current_branch = repo.active_branch.name
             print(f"📍 Current branch: {current_branch}")
+
+            if only_clean:
+                if current_branch != "main" or repo.is_dirty():
+                    print("⚠️ Skipping repository as it is not clean or not on main.")
+                    continue
 
             if repo.is_dirty():
                 print("⚠️ Uncommitted changes detected. Stashing...")
