@@ -1,0 +1,23 @@
+name: Question
+description: Ask a question about GitBlend.
+title: "[QUESTION] "
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question? Please provide as much detail as possible.
+
+  - type: input
+    id: question
+    attributes:
+      label: Question
+      description: What is your question?
+      placeholder: "e.g., How do I install GitBlend on Windows?"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide any additional context or details.
+      placeholder: "e.g., I tried running the installer script, but it failed."
