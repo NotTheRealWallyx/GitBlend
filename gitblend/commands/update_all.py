@@ -9,7 +9,7 @@ def find_git_repos(start_path):
     for root, dirs, files in os.walk(start_path):
         if ".git" in dirs:
             git_repos.append(root)
-            dirs.remove(".git")  # Skip traversing into .git directories
+            dirs.remove(".git")
     return git_repos
 
 
@@ -29,13 +29,33 @@ def run(args):
 
     for repo_path in git_repos:
         try:
-            print(f"🔄 Updating repository at {repo_path}...")
+            print(f"🔄 Processing repository at {repo_path}...")
             repo = Repo(repo_path)
+
+            current_branch = repo.active_branch.name
+            print(f"📍 Current branch: {current_branch}")
+
             if repo.is_dirty():
-                print(f"⚠️ Repository at {repo_path} has uncommitted changes. Skipping.")
-                continue
+                print("⚠️ Uncommitted changes detected. Stashing...")
+                repo.git.stash("save", "Auto-stash before updating main")
+
+            if current_branch != "main":
+                print("🔄 Switching to main branch...")
+                repo.git.checkout("main")
+
+            print("⬇️ Pulling latest changes on main...")
             repo.git.pull()
+
+            if current_branch != "main":
+                print(f"🔄 Switching back to branch: {current_branch}...")
+                repo.git.checkout(current_branch)
+
+            if repo.git.stash("list"):
+                print("🔄 Unstashing changes...")
+                repo.git.stash("pop")
+
             print(f"✅ Repository at {repo_path} updated successfully.")
+
         except InvalidGitRepositoryError:
             print(f"❌ {repo_path} is not a valid Git repository. Skipping.")
         except Exception as e:
