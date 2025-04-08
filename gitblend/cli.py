@@ -1,6 +1,6 @@
 import argparse
 import sys
-from gitblend.commands import delete_tag, list_tags, create_tag
+from gitblend.commands import delete_tag, list_tags, create_tag, rename_tag
 
 
 def add_create_tag_command(subparsers):
@@ -36,6 +36,17 @@ def add_list_tags_command(subparsers):
     list_tags_parser.set_defaults(func=list_tags.run)
 
 
+def add_rename_tag_command(subparsers):
+    rename_tag_parser = subparsers.add_parser(
+        "rename-tag", help="Rename an existing Git tag"
+    )
+    rename_tag_parser.add_argument(
+        "old_tag", type=str, help="The name of the tag to rename"
+    )
+    rename_tag_parser.add_argument("new_tag", type=str, help="The new name for the tag")
+    rename_tag_parser.set_defaults(func=rename_tag.run)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="gitblend", description="GitBlend - A Git utility tool"
@@ -46,6 +57,7 @@ def main():
     add_create_tag_command(subparsers)
     add_delete_tag_command(subparsers)
     add_list_tags_command(subparsers)
+    add_rename_tag_command(subparsers)
 
     args = parser.parse_args()
 

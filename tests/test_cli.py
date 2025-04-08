@@ -29,6 +29,12 @@ class TestCLI(unittest.TestCase):
         main()
         mock_list_tags.assert_called_once()
 
+    @patch("gitblend.commands.rename_tag.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "rename-tag", "v1.0", "v1.1"])
+    def test_rename_tag_command(self, mock_rename_tag):
+        main()
+        mock_rename_tag.assert_called_once()
+
 
 if __name__ == "__main__":
     unittest.main()
