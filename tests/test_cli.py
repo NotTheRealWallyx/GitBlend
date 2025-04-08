@@ -35,6 +35,32 @@ class TestCLI(unittest.TestCase):
         main()
         mock_rename_tag.assert_called_once()
 
+    def test_update_all_command(self):
+        """Test the update-all command routing."""
+        args = ["update-all", "--path", "/mock/path"]
+
+        with patch("gitblend.cli.update_all.run") as mock_run:
+            with patch("sys.argv", ["gitblend"] + args):
+                main()
+
+            mock_run.assert_called_once()
+            called_args = mock_run.call_args[0][0]
+            assert called_args.path == "/mock/path"
+            assert not called_args.only_clean
+
+    def test_update_all_command_with_only_clean(self):
+        """Test the update-all command with --only-clean flag."""
+        args = ["update-all", "--only-clean"]
+
+        with patch("gitblend.cli.update_all.run") as mock_run:
+            with patch("sys.argv", ["gitblend"] + args):
+                main()
+
+            mock_run.assert_called_once()
+            called_args = mock_run.call_args[0][0]
+            assert called_args.only_clean
+            assert called_args.path is None
+
 
 if __name__ == "__main__":
     unittest.main()
