@@ -1,6 +1,6 @@
 import argparse
 import sys
-from gitblend.commands import delete_tag, list_tags
+from gitblend.commands import delete_tag, list_tags, create_tag
 
 
 def main():
@@ -9,6 +9,21 @@ def main():
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
+    # Create tag command
+    create_tag_parser = subparsers.add_parser("create-tag", help="Create a new Git tag")
+    create_tag_parser.add_argument(
+        "tag", type=str, help="The name of the tag to create"
+    )
+    create_tag_parser.add_argument(
+        "--message", type=str, required=True, help="The message for the tag"
+    )
+    create_tag_parser.add_argument(
+        "--push",
+        action="store_true",
+        help="Push the tag to the remote repository",
+    )
+    create_tag_parser.set_defaults(func=create_tag.run)
 
     # Delete tag command
     delete_tag_parser = subparsers.add_parser(
