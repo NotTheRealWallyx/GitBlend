@@ -19,4 +19,4 @@ def run(args):
         print(f"✅ Tag '{old_tag}' has been renamed to '{new_tag}' successfully.")
     except Exception as e:
         print(f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}")
-        raise
+        sys.exit(1)
