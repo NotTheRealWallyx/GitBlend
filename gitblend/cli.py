@@ -1,6 +1,6 @@
 import argparse
 import sys
-from gitblend.commands import delete_tag, list_tags, create_tag, rename_tag
+from gitblend.commands import delete_tag, list_tags, create_tag, rename_tag, update_all
 
 
 def add_create_tag_command(subparsers):
@@ -47,6 +47,18 @@ def add_rename_tag_command(subparsers):
     rename_tag_parser.set_defaults(func=rename_tag.run)
 
 
+def add_update_all_command(subparsers):
+    update_all_parser = subparsers.add_parser(
+        "update-all", help="Update all Git repositories on the computer"
+    )
+    update_all_parser.add_argument(
+        "--path",
+        type=str,
+        help="The starting path to search for repositories (default: home directory)",
+    )
+    update_all_parser.set_defaults(func=update_all.run)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="gitblend", description="GitBlend - A Git utility tool"
@@ -58,6 +70,7 @@ def main():
     add_delete_tag_command(subparsers)
     add_list_tags_command(subparsers)
     add_rename_tag_command(subparsers)
+    add_update_all_command(subparsers)
 
     args = parser.parse_args()
 
