@@ -1,0 +1,30 @@
+name: Feature Request
+description: Suggest a new feature or improvement for GitBlend.
+title: "[FEATURE] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please provide the following details.
+
+  - type: input
+    id: feature
+    attributes:
+      label: Feature Summary
+      description: Provide a brief summary of the feature.
+      placeholder: "e.g., Add support for listing remote branches."
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Feature Details
+      description: Provide a detailed description of the feature.
+      placeholder: "e.g., The CLI should include a command to list all remote branches."
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Benefits
+      description: Explain how this feature will benefit users.
+      placeholder: "e.g., This will make it easier to manage remote branches."
