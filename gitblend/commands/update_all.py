@@ -3,11 +3,13 @@ import subprocess
 
 from gitblend.utils import handle_git_errors
 
+GIT_EXECUTABLE = "/usr/bin/git"
+
 
 def find_git_repos(start_path):
     """Recursively find all Git repositories starting from the given path."""
     git_repos = []
-    for root, dirs, files in os.walk(start_path):
+    for root, dirs in os.walk(start_path):
         if ".git" in dirs:
             git_repos.append(root)
             dirs.remove(".git")
@@ -17,7 +19,10 @@ def find_git_repos(start_path):
 def is_dirty(repo_path):
     """Check if a Git repository has uncommitted changes."""
     result = subprocess.run(
-        ["git", "status", "--porcelain"], cwd=repo_path, text=True, capture_output=True
+        [GIT_EXECUTABLE, "status", "--porcelain"],
+        cwd=repo_path,
+        text=True,
+        capture_output=True,
     )
     return bool(result.stdout.strip())
 
@@ -25,7 +30,7 @@ def is_dirty(repo_path):
 def stash_changes(repo_path):
     """Stash changes in a Git repository."""
     subprocess.run(
-        ["git", "stash", "save", "Auto-stash before updating main"],
+        [GIT_EXECUTABLE, "stash", "save", "Auto-stash before updating main"],
         cwd=repo_path,
         check=True,
     )
@@ -33,25 +38,25 @@ def stash_changes(repo_path):
 
 def switch_branch(repo_path, branch):
     """Switch to a specific branch in a Git repository."""
-    subprocess.run(["git", "checkout", branch], cwd=repo_path, check=True)
+    subprocess.run([GIT_EXECUTABLE, "checkout", branch], cwd=repo_path, check=True)
 
 
 def pull_changes(repo_path):
     """Pull the latest changes in the current branch of a Git repository."""
-    subprocess.run(["git", "pull"], cwd=repo_path, check=True)
+    subprocess.run([GIT_EXECUTABLE, "pull"], cwd=repo_path, check=True)
 
 
 def has_stash(repo_path):
     """Check if there are stashed changes in a Git repository."""
     result = subprocess.run(
-        ["git", "stash", "list"], cwd=repo_path, text=True, capture_output=True
+        [GIT_EXECUTABLE, "stash", "list"], cwd=repo_path, text=True, capture_output=True
     )
     return bool(result.stdout.strip())
 
 
 def pop_stash(repo_path):
     """Pop the latest stash in a Git repository."""
-    subprocess.run(["git", "stash", "pop"], cwd=repo_path, check=True)
+    subprocess.run([GIT_EXECUTABLE, "stash", "pop"], cwd=repo_path, check=True)
 
 
 @handle_git_errors
@@ -74,7 +79,7 @@ def run(args):
             print(f"🔄 Processing repository at {repo_path}...")
 
             result = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                [GIT_EXECUTABLE, "rev-parse", "--abbrev-ref", "HEAD"],
                 cwd=repo_path,
                 text=True,
                 capture_output=True,

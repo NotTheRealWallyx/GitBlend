@@ -1,6 +1,7 @@
 from unittest import TestCase, mock
 
 from gitblend.commands.update_all import (
+    GIT_EXECUTABLE,
     has_stash,
     is_dirty,
     pop_stash,
@@ -24,7 +25,7 @@ class TestUpdateAll(TestCase):
     def test_stash_changes(self, mock_run):
         stash_changes("/fake/repo")
         mock_run.assert_called_with(
-            ["git", "stash", "save", "Auto-stash before updating main"],
+            [GIT_EXECUTABLE, "stash", "save", "Auto-stash before updating main"],
             cwd="/fake/repo",
             check=True,
         )
@@ -33,13 +34,15 @@ class TestUpdateAll(TestCase):
     def test_switch_branch(self, mock_run):
         switch_branch("/fake/repo", "main")
         mock_run.assert_called_with(
-            ["git", "checkout", "main"], cwd="/fake/repo", check=True
+            [GIT_EXECUTABLE, "checkout", "main"], cwd="/fake/repo", check=True
         )
 
     @mock.patch("subprocess.run")
     def test_pull_changes(self, mock_run):
         pull_changes("/fake/repo")
-        mock_run.assert_called_with(["git", "pull"], cwd="/fake/repo", check=True)
+        mock_run.assert_called_with(
+            [GIT_EXECUTABLE, "pull"], cwd="/fake/repo", check=True
+        )
 
     @mock.patch("subprocess.run")
     def test_has_stash(self, mock_run):
@@ -53,7 +56,7 @@ class TestUpdateAll(TestCase):
     def test_pop_stash(self, mock_run):
         pop_stash("/fake/repo")
         mock_run.assert_called_with(
-            ["git", "stash", "pop"], cwd="/fake/repo", check=True
+            [GIT_EXECUTABLE, "stash", "pop"], cwd="/fake/repo", check=True
         )
 
     @mock.patch("subprocess.run")
