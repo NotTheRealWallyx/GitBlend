@@ -1,4 +1,4 @@
-import git
+import sys
 from gitblend.commands import delete_tag, create_tag
 from copy import deepcopy
 
