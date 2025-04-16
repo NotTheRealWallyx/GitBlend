@@ -1,65 +1,80 @@
-import os
-from unittest.mock import MagicMock, patch
+from unittest import TestCase, mock
 
-import pytest
-
-from gitblend.commands import update_all
-
-
-def test_find_git_repos(tmp_path):
-    """Test finding Git repositories in a directory."""
-    # Create mock Git repositories
-    repo1 = tmp_path / "repo1/.git"
-    repo2 = tmp_path / "repo2/.git"
-    repo1.mkdir(parents=True)
-    repo2.mkdir(parents=True)
-
-    repos = update_all.find_git_repos(tmp_path)
-
-    assert len(repos) == 2
-    assert str(tmp_path / "repo1") in repos
-    assert str(tmp_path / "repo2") in repos
+from gitblend.commands.update_all import (
+    has_stash,
+    is_dirty,
+    pop_stash,
+    pull_changes,
+    run,
+    stash_changes,
+    switch_branch,
+)
 
 
-@patch("gitblend.commands.update_all.Repo")
-def test_run_only_clean(mock_repo):
-    """Test the --only-clean flag behavior."""
-    # Mock repository behavior
-    repo_mock = MagicMock()
-    repo_mock.active_branch.name = "main"
-    repo_mock.is_dirty.return_value = False
-    mock_repo.return_value = repo_mock
+class TestUpdateAll(TestCase):
+    @mock.patch("subprocess.run")
+    def test_is_dirty(self, mock_run):
+        mock_run.return_value.stdout = " M file.txt\n"
+        self.assertTrue(is_dirty("/fake/repo"))
 
-    args = MagicMock()
-    args.path = None
-    args.only_clean = True
+        mock_run.return_value.stdout = ""
+        self.assertFalse(is_dirty("/fake/repo"))
 
-    with patch(
-        "gitblend.commands.update_all.find_git_repos", return_value=["/mock/repo"]
-    ):
-        update_all.run(args)
+    @mock.patch("subprocess.run")
+    def test_stash_changes(self, mock_run):
+        stash_changes("/fake/repo")
+        mock_run.assert_called_with(
+            ["git", "stash", "save", "Auto-stash before updating main"],
+            cwd="/fake/repo",
+            check=True,
+        )
 
-    # Ensure pull is called since the repo is clean and on main
-    repo_mock.git.pull.assert_called_once()
+    @mock.patch("subprocess.run")
+    def test_switch_branch(self, mock_run):
+        switch_branch("/fake/repo", "main")
+        mock_run.assert_called_with(
+            ["git", "checkout", "main"], cwd="/fake/repo", check=True
+        )
 
+    @mock.patch("subprocess.run")
+    def test_pull_changes(self, mock_run):
+        pull_changes("/fake/repo")
+        mock_run.assert_called_with(["git", "pull"], cwd="/fake/repo", check=True)
 
-@patch("gitblend.commands.update_all.Repo")
-def test_run_skip_dirty_or_not_main(mock_repo):
-    """Test skipping repositories with --only-clean when dirty or not on main."""
-    # Mock repository behavior
-    repo_mock = MagicMock()
-    repo_mock.active_branch.name = "feature-branch"
-    repo_mock.is_dirty.return_value = True
-    mock_repo.return_value = repo_mock
+    @mock.patch("subprocess.run")
+    def test_has_stash(self, mock_run):
+        mock_run.return_value.stdout = "stash@{0}: WIP on main: abc123 Commit message\n"
+        self.assertTrue(has_stash("/fake/repo"))
 
-    args = MagicMock()
-    args.path = None
-    args.only_clean = True
+        mock_run.return_value.stdout = ""
+        self.assertFalse(has_stash("/fake/repo"))
 
-    with patch(
-        "gitblend.commands.update_all.find_git_repos", return_value=["/mock/repo"]
-    ):
-        update_all.run(args)
+    @mock.patch("subprocess.run")
+    def test_pop_stash(self, mock_run):
+        pop_stash("/fake/repo")
+        mock_run.assert_called_with(
+            ["git", "stash", "pop"], cwd="/fake/repo", check=True
+        )
 
-    # Ensure pull is not called since the repo is dirty and not on main
-    repo_mock.git.pull.assert_not_called()
+    @mock.patch("subprocess.run")
+    @mock.patch("gitblend.commands.update_all.find_git_repos")
+    def test_run(self, mock_find_git_repos, mock_run):
+        mock_find_git_repos.return_value = ["/fake/repo1", "/fake/repo2"]
+
+        args = mock.Mock()
+        args.path = None
+        args.only_clean = False
+
+        run(args)
+
+        # Breakdown of subprocess calls:
+        # 1. Get current branch (2 repos)
+        # 2. Check if dirty (2 repos)
+        # 3. Stash changes (2 repos)
+        # 4. Switch to main branch (2 repos)
+        # 5. Pull changes (2 repos)
+        # 6. Switch back to original branch (2 repos)
+        # 7. Pop stash (2 repos)
+        # Total = 16 calls
+        self.assertEqual(mock_run.call_count, 16)
+        mock_find_git_repos.assert_called_once()

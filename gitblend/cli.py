@@ -1,14 +1,8 @@
 import argparse
 import sys
 
-from gitblend.commands import (
-    create_tag,
-    delete_tag,
-    list_tags,
-    rename_tag,
-    update_all,
-    version,
-)
+from gitblend.commands import update_all, version
+from gitblend.commands.tags import create, delete, list, rename
 
 
 def add_create_tag_command(subparsers):
@@ -24,7 +18,7 @@ def add_create_tag_command(subparsers):
         action="store_true",
         help="Push the tag to the remote repository",
     )
-    create_tag_parser.set_defaults(func=create_tag.run)
+    create_tag_parser.set_defaults(func=create.run)
 
 
 def add_delete_tag_command(subparsers):
@@ -34,14 +28,14 @@ def add_delete_tag_command(subparsers):
     delete_tag_parser.add_argument(
         "tag", type=str, help="The name of the tag to delete"
     )
-    delete_tag_parser.set_defaults(func=delete_tag.run)
+    delete_tag_parser.set_defaults(func=delete.run)
 
 
 def add_list_tags_command(subparsers):
     list_tags_parser = subparsers.add_parser(
         "list-tags", help="List all Git tags in the repository"
     )
-    list_tags_parser.set_defaults(func=list_tags.run)
+    list_tags_parser.set_defaults(func=list.run)
 
 
 def add_rename_tag_command(subparsers):
@@ -52,7 +46,7 @@ def add_rename_tag_command(subparsers):
         "old_tag", type=str, help="The name of the tag to rename"
     )
     rename_tag_parser.add_argument("new_tag", type=str, help="The new name for the tag")
-    rename_tag_parser.set_defaults(func=rename_tag.run)
+    rename_tag_parser.set_defaults(func=rename.run)
 
 
 def add_update_all_command(subparsers):

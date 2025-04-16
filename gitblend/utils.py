@@ -1,6 +1,5 @@
+import subprocess
 import sys
-
-from git import GitCommandError, InvalidGitRepositoryError
 
 
 def handle_git_errors(func):
@@ -9,11 +8,8 @@ def handle_git_errors(func):
     def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except InvalidGitRepositoryError:
-            print("❌ Error: Not inside a valid Git repository.", file=sys.stderr)
-            sys.exit(1)
-        except GitCommandError as e:
-            print(f"❌ Git command error: {e}", file=sys.stderr)
-            sys.exit(1)
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Error running git command: {e}", file=sys.stderr)
+            raise SystemExit(e.returncode)
 
     return wrapper
