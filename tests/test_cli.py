@@ -25,7 +25,7 @@ class TestCLI(unittest.TestCase):
         main()
         mock_delete_tag.assert_called_once()
 
-    @patch("gitblend.commands.tags.list_tags.run", side_effect=mock_run)
+    @patch("gitblend.commands.tags.list.run", side_effect=mock_run)
     @patch("sys.argv", ["gitblend", "list-tags"])
     def test_list_tags_command(self, mock_list_tags):
         main()

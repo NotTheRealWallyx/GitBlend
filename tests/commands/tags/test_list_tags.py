@@ -3,7 +3,7 @@ import sys
 import unittest
 from unittest.mock import MagicMock, patch
 
-from gitblend.commands.tags.list_tags import run
+from gitblend.commands.tags.list import run
 
 
 class TestListTagsCommand(unittest.TestCase):

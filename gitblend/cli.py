@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from gitblend.commands import update_all, version
-from gitblend.commands.tags import create, delete, list_tags, rename
+from gitblend.commands.tags import create, delete, list, rename
 
 
 def add_create_tag_command(subparsers):
@@ -35,7 +35,7 @@ def add_list_tags_command(subparsers):
     list_tags_parser = subparsers.add_parser(
         "list-tags", help="List all Git tags in the repository"
     )
-    list_tags_parser.set_defaults(func=list_tags.run)
+    list_tags_parser.set_defaults(func=list.run)
 
 
 def add_rename_tag_command(subparsers):
