@@ -1,6 +1,8 @@
 import subprocess
 import sys
 
+GIT_EXECUTABLE = "/usr/bin/git"
+
 
 def handle_git_errors(func):
     """Decorator to handle common Git errors."""

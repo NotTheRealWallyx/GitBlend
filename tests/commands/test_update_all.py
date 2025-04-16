@@ -1,7 +1,6 @@
 from unittest import TestCase, mock
 
 from gitblend.commands.update_all import (
-    GIT_EXECUTABLE,
     has_stash,
     is_dirty,
     pop_stash,
@@ -10,6 +9,7 @@ from gitblend.commands.update_all import (
     stash_changes,
     switch_branch,
 )
+from gitblend.utils import GIT_EXECUTABLE
 
 
 class TestUpdateAll(TestCase):

@@ -1,9 +1,7 @@
 import os
 import subprocess
 
-from gitblend.utils import handle_git_errors
-
-GIT_EXECUTABLE = "/usr/bin/git"
+from gitblend.utils import GIT_EXECUTABLE, handle_git_errors
 
 
 def find_git_repos(start_path):
