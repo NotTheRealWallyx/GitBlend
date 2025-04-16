@@ -1,6 +1,5 @@
+import subprocess
 import sys
-
-from git import GitCommandError, Repo
 
 from gitblend.utils import handle_git_errors
 
@@ -9,20 +8,20 @@ from gitblend.utils import handle_git_errors
 def run(args):
     tag_name = args.tag
 
-    repo = Repo(search_parent_directories=True)
-
     # Delete tag locally
-    if tag_name in repo.tags:
-        repo.delete_tag(tag_name)
+    try:
+        subprocess.run(["git", "tag", "-d", tag_name], text=True, check=True)
         print(f"✅ Tag '{tag_name}' deleted locally.")
-    else:
-        print(f"❌ Tag '{tag_name}' does not exist locally.")
+    except subprocess.CalledProcessError:
+        print(f"❌ Tag '{tag_name}' does not exist locally.", file=sys.stderr)
         sys.exit(1)
 
     # Delete tag remotely
     try:
-        repo.git.push("origin", f":refs/tags/{tag_name}")
+        subprocess.run(
+            ["git", "push", "origin", f":refs/tags/{tag_name}"], text=True, check=True
+        )
         print(f"✅ Tag '{tag_name}' deleted remotely.")
-    except GitCommandError:
-        print(f"❌ Failed to delete remote tag '{tag_name}'.")
+    except subprocess.CalledProcessError:
+        print(f"❌ Failed to delete remote tag '{tag_name}'.", file=sys.stderr)
         sys.exit(1)
