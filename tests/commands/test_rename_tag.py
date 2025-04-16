@@ -7,7 +7,8 @@ class TestRenameTag(unittest.TestCase):
 
     @patch("gitblend.commands.delete_tag.run")
     @patch("gitblend.commands.create_tag.run")
-    def test_rename_tag_success(self, mock_create_tag, mock_delete_tag):
+    @patch("sys.exit")
+    def test_rename_tag_success(self, mock_sys_exit, mock_create_tag, mock_delete_tag):
         args = MagicMock()
         args.old_tag = "v1.0"
         args.new_tag = "v1.1"
@@ -16,10 +17,14 @@ class TestRenameTag(unittest.TestCase):
 
         mock_delete_tag.assert_called_once_with(args)
         mock_create_tag.assert_called_once_with(args)
+        mock_sys_exit.assert_not_called()
 
     @patch("gitblend.commands.delete_tag.run")
     @patch("gitblend.commands.create_tag.run")
-    def test_rename_tag_nonexistent_old_tag(self, mock_create_tag, mock_delete_tag):
+    @patch("sys.exit")
+    def test_rename_tag_nonexistent_old_tag(
+        self, mock_sys_exit, mock_create_tag, mock_delete_tag
+    ):
         mock_delete_tag.side_effect = SystemExit(1)
 
         args = MagicMock()
@@ -34,7 +39,10 @@ class TestRenameTag(unittest.TestCase):
 
     @patch("gitblend.commands.delete_tag.run")
     @patch("gitblend.commands.create_tag.run")
-    def test_rename_tag_create_error(self, mock_create_tag, mock_delete_tag):
+    @patch("sys.exit")
+    def test_rename_tag_create_error(
+        self, mock_sys_exit, mock_create_tag, mock_delete_tag
+    ):
         mock_create_tag.side_effect = Exception("Create tag error")
 
         args = MagicMock()

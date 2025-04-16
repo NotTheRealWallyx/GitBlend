@@ -20,3 +20,4 @@ def run(args):
     except Exception as e:
         print(f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}")
         sys.exit(1)
+        raise
