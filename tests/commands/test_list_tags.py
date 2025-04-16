@@ -1,61 +1,49 @@
-import pytest
-from git import GitCommandError, InvalidGitRepositoryError
+import subprocess
+import sys
+import unittest
+from unittest.mock import MagicMock, patch
 
-from gitblend.commands import list_tags
-
-
-@pytest.fixture
-def mock_repo(mocker):
-    """Mock the Repo object from GitPython."""
-    return mocker.patch("gitblend.commands.list_tags.Repo")
+from gitblend.commands.list_tags import run
 
 
-def test_list_tags_success(mock_repo):
-    """Test listing tags successfully."""
-    mock_repo_instance = mock_repo.return_value
-    mock_repo_instance.tags = [
-        type("Tag", (object,), {"name": "v1.0.0"}),
-        type("Tag", (object,), {"name": "v2.0.0"}),
-    ]
+class TestListTagsCommand(unittest.TestCase):
 
-    args = type("Args", (object,), {})
-    list_tags.run(args)
+    @patch("subprocess.run")
+    def test_list_tags_with_tags(self, mock_run):
+        mock_run.return_value = MagicMock(stdout="v1.0\nv1.1\nv2.0\n", returncode=0)
 
-    # No exceptions should be raised, and tags should be printed
-    mock_repo.assert_called_once_with(search_parent_directories=True)
+        with patch("builtins.print") as mock_print:
+            run([])
+
+            mock_print.assert_any_call("📋 Git Tags:")
+            mock_print.assert_any_call("v1.0")
+            mock_print.assert_any_call("v1.1")
+            mock_print.assert_any_call("v2.0")
+
+    @patch("subprocess.run")
+    def test_list_tags_no_tags(self, mock_run):
+        mock_run.return_value = MagicMock(stdout="", returncode=0)
+
+        with patch("builtins.print") as mock_print:
+            run([])
+
+            mock_print.assert_any_call("No tags found in the repository.")
+
+    @patch("subprocess.run")
+    def test_list_tags_git_error(self, mock_run):
+        mock_run.side_effect = subprocess.CalledProcessError(
+            returncode=1, cmd="git tag", output="", stderr="fatal: not a git repository"
+        )
+
+        with patch("builtins.print") as mock_print:
+            with self.assertRaises(SystemExit):
+                run([])
+
+            mock_print.assert_any_call(
+                "❌ Error running git command: Command 'git tag' returned non-zero exit status 1.",
+                file=sys.stderr,
+            )
 
 
-def test_list_tags_no_tags(mock_repo):
-    """Test listing tags when no tags exist."""
-    mock_repo_instance = mock_repo.return_value
-    mock_repo_instance.tags = []
-
-    args = type("Args", (object,), {})
-    list_tags.run(args)
-
-    # No exceptions should be raised, and no tags should be printed
-    mock_repo.assert_called_once_with(search_parent_directories=True)
-
-
-def test_list_tags_invalid_repo(mock_repo):
-    """Test when the current directory is not a valid Git repository."""
-    mock_repo.side_effect = InvalidGitRepositoryError("Invalid repository")
-
-    args = type("Args", (object,), {})
-
-    with pytest.raises(SystemExit) as e:
-        list_tags.run(args)
-
-    assert e.value.code == 1
-
-
-def test_list_tags_git_command_error(mock_repo):
-    """Test when a Git command error occurs."""
-    mock_repo.side_effect = GitCommandError("git tag", "Error")
-
-    args = type("Args", (object,), {})
-
-    with pytest.raises(SystemExit) as e:
-        list_tags.run(args)
-
-    assert e.value.code == 1
+if __name__ == "__main__":
+    unittest.main()

@@ -1,4 +1,4 @@
-from git import Repo
+import subprocess
 
 from gitblend.utils import handle_git_errors
 
@@ -6,13 +6,11 @@ from gitblend.utils import handle_git_errors
 @handle_git_errors
 def run(args):
     """List all Git tags."""
-    repo = Repo(search_parent_directories=True)
-
-    # Get all tags
-    tags = repo.tags
-    if tags:
+    result = subprocess.run(["git", "tag"], text=True, capture_output=True, check=True)
+    tags = result.stdout.strip().split("\n")
+    if tags and tags[0]:
         print("📋 Git Tags:")
         for tag in tags:
-            print(tag.name)
+            print(tag)
     else:
         print("No tags found in the repository.")
