@@ -1,7 +1,7 @@
 import sys
 from copy import deepcopy
 
-from gitblend.commands.tags import create, delete_tag
+from gitblend.commands.tags import create, delete
 
 
 def run(args):
@@ -10,7 +10,7 @@ def run(args):
 
     try:
         print(f"🔄 Renaming tag '{old_tag}' to '{new_tag}'...")
-        delete_tag.run(args)
+        delete.run(args)
 
         new_args = deepcopy(args)
         new_args.tag = new_tag

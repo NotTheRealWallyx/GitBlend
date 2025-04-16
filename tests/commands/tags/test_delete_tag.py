@@ -3,7 +3,7 @@ import sys
 import unittest
 from unittest.mock import MagicMock, patch
 
-from gitblend.commands.tags.delete_tag import run
+from gitblend.commands.tags.delete import run
 
 
 class TestDeleteTagCommand(unittest.TestCase):

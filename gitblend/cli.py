@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from gitblend.commands import update_all, version
-from gitblend.commands.tags import create, delete_tag, list_tags, rename
+from gitblend.commands.tags import create, delete, list_tags, rename
 
 
 def add_create_tag_command(subparsers):
@@ -28,7 +28,7 @@ def add_delete_tag_command(subparsers):
     delete_tag_parser.add_argument(
         "tag", type=str, help="The name of the tag to delete"
     )
-    delete_tag_parser.set_defaults(func=delete_tag.run)
+    delete_tag_parser.set_defaults(func=delete.run)
 
 
 def add_list_tags_command(subparsers):
