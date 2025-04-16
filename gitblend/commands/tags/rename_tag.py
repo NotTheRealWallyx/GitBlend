@@ -1,7 +1,7 @@
 import sys
 from copy import deepcopy
 
-from gitblend.commands import create_tag, delete_tag
+from gitblend.commands.tags import create_tag, delete_tag
 
 
 def run(args):

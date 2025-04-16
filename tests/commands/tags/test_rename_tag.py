@@ -2,13 +2,13 @@ import sys
 import unittest
 from unittest.mock import MagicMock, patch
 
-from gitblend.commands.rename_tag import run
+from gitblend.commands.tags.rename_tag import run
 
 
 class TestRenameTagCommand(unittest.TestCase):
 
-    @patch("gitblend.commands.delete_tag.run")
-    @patch("gitblend.commands.create_tag.run")
+    @patch("gitblend.commands.tags.delete_tag.run")
+    @patch("gitblend.commands.tags.create_tag.run")
     def test_rename_tag_success(self, mock_create_tag, mock_delete_tag):
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")
 
@@ -22,8 +22,8 @@ class TestRenameTagCommand(unittest.TestCase):
                 "✅ Tag 'v1.0' has been renamed to 'v1.1' successfully."
             )
 
-    @patch("gitblend.commands.delete_tag.run")
-    @patch("gitblend.commands.create_tag.run")
+    @patch("gitblend.commands.tags.delete_tag.run")
+    @patch("gitblend.commands.tags.create_tag.run")
     def test_rename_tag_delete_failure(self, mock_create_tag, mock_delete_tag):
         mock_delete_tag.side_effect = SystemExit(1)
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")
@@ -39,8 +39,8 @@ class TestRenameTagCommand(unittest.TestCase):
                 "❌ Error while renaming tag 'v1.0' to 'v1.1': 1", file=sys.stderr
             )
 
-    @patch("gitblend.commands.delete_tag.run")
-    @patch("gitblend.commands.create_tag.run")
+    @patch("gitblend.commands.tags.delete_tag.run")
+    @patch("gitblend.commands.tags.create_tag.run")
     def test_rename_tag_create_failure(self, mock_create_tag, mock_delete_tag):
         mock_create_tag.side_effect = SystemExit(1)
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")
