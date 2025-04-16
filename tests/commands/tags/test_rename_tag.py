@@ -8,7 +8,7 @@ from gitblend.commands.tags.rename import run
 class TestRenameTagCommand(unittest.TestCase):
 
     @patch("gitblend.commands.tags.delete_tag.run")
-    @patch("gitblend.commands.tags.create_tag.run")
+    @patch("gitblend.commands.tags.create.run")
     def test_rename_tag_success(self, mock_create_tag, mock_delete_tag):
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")
 
@@ -23,7 +23,7 @@ class TestRenameTagCommand(unittest.TestCase):
             )
 
     @patch("gitblend.commands.tags.delete_tag.run")
-    @patch("gitblend.commands.tags.create_tag.run")
+    @patch("gitblend.commands.tags.create.run")
     def test_rename_tag_delete_failure(self, mock_create_tag, mock_delete_tag):
         mock_delete_tag.side_effect = SystemExit(1)
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")
@@ -40,7 +40,7 @@ class TestRenameTagCommand(unittest.TestCase):
             )
 
     @patch("gitblend.commands.tags.delete_tag.run")
-    @patch("gitblend.commands.tags.create_tag.run")
+    @patch("gitblend.commands.tags.create.run")
     def test_rename_tag_create_failure(self, mock_create_tag, mock_delete_tag):
         mock_create_tag.side_effect = SystemExit(1)
         args = MagicMock(old_tag="v1.0", new_tag="v1.1")

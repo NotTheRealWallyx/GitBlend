@@ -10,7 +10,7 @@ def mock_run(args):
 
 class TestCLI(unittest.TestCase):
 
-    @patch("gitblend.commands.tags.create_tag.run", side_effect=mock_run)
+    @patch("gitblend.commands.tags.create.run", side_effect=mock_run)
     @patch(
         "sys.argv",
         ["gitblend", "create-tag", "v1.0", "--message", "Initial release", "--push"],

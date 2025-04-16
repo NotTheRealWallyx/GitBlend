@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from gitblend.commands import update_all, version
-from gitblend.commands.tags import create_tag, delete_tag, list_tags, rename
+from gitblend.commands.tags import create, delete_tag, list_tags, rename
 
 
 def add_create_tag_command(subparsers):
@@ -18,7 +18,7 @@ def add_create_tag_command(subparsers):
         action="store_true",
         help="Push the tag to the remote repository",
     )
-    create_tag_parser.set_defaults(func=create_tag.run)
+    create_tag_parser.set_defaults(func=create.run)
 
 
 def add_delete_tag_command(subparsers):

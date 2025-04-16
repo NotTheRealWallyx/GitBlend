@@ -1,7 +1,7 @@
 import sys
 from copy import deepcopy
 
-from gitblend.commands.tags import create_tag, delete_tag
+from gitblend.commands.tags import create, delete_tag
 
 
 def run(args):
@@ -15,7 +15,7 @@ def run(args):
         new_args = deepcopy(args)
         new_args.tag = new_tag
 
-        create_tag.run(new_args)
+        create.run(new_args)
 
         print(f"✅ Tag '{old_tag}' has been renamed to '{new_tag}' successfully.")
     except SystemExit as e:
