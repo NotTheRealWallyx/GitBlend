@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-from gitblend.utils import handle_git_errors
+from gitblend.utils import GIT_EXECUTABLE, handle_git_errors
 
 
 @handle_git_errors
@@ -10,7 +10,7 @@ def run(args):
 
     # Delete tag locally
     try:
-        subprocess.run(["git", "tag", "-d", tag_name], text=True, check=True)
+        subprocess.run([GIT_EXECUTABLE, "tag", "-d", tag_name], text=True, check=True)
         print(f"✅ Tag '{tag_name}' deleted locally.")
     except subprocess.CalledProcessError:
         print(f"❌ Tag '{tag_name}' does not exist locally.", file=sys.stderr)
@@ -19,7 +19,9 @@ def run(args):
     # Delete tag remotely
     try:
         subprocess.run(
-            ["git", "push", "origin", f":refs/tags/{tag_name}"], text=True, check=True
+            [GIT_EXECUTABLE, "push", "origin", f":refs/tags/{tag_name}"],
+            text=True,
+            check=True,
         )
         print(f"✅ Tag '{tag_name}' deleted remotely.")
     except subprocess.CalledProcessError:

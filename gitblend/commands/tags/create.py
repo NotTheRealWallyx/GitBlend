@@ -1,6 +1,6 @@
 import subprocess
 
-from gitblend.utils import handle_git_errors
+from gitblend.utils import GIT_EXECUTABLE, handle_git_errors
 
 
 @handle_git_errors
@@ -10,10 +10,14 @@ def run(args):
     message = args.message
     push = args.push
 
-    subprocess.run(["git", "tag", "-a", tag_name, "-m", message], text=True, check=True)
+    subprocess.run(
+        [GIT_EXECUTABLE, "tag", "-a", tag_name, "-m", message], text=True, check=True
+    )
     print(f"✅ Tag '{tag_name}' created successfully.")
 
     # Push the tag if requested
     if push:
-        subprocess.run(["git", "push", "origin", tag_name], text=True, check=True)
+        subprocess.run(
+            [GIT_EXECUTABLE, "push", "origin", tag_name], text=True, check=True
+        )
         print(f"✅ Tag '{tag_name}' pushed to remote repository.")
