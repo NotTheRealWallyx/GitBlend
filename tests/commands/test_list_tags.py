@@ -1,5 +1,6 @@
 import pytest
-from git import InvalidGitRepositoryError, GitCommandError
+from git import GitCommandError, InvalidGitRepositoryError
+
 from gitblend.commands import list_tags
 
 

@@ -1,4 +1,5 @@
 from git import Repo
+
 from gitblend.utils import handle_git_errors
 
 

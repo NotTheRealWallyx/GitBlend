@@ -1,6 +1,8 @@
-from unittest import mock
 from io import StringIO
-from git import InvalidGitRepositoryError, GitCommandError
+from unittest import mock
+
+from git import GitCommandError, InvalidGitRepositoryError
+
 from gitblend.utils import handle_git_errors
 
 

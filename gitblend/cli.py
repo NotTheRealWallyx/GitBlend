@@ -1,6 +1,14 @@
 import argparse
 import sys
-from gitblend.commands import delete_tag, list_tags, create_tag, rename_tag, update_all
+
+from gitblend.commands import (
+    create_tag,
+    delete_tag,
+    list_tags,
+    rename_tag,
+    update_all,
+    version,
+)
 
 
 def add_create_tag_command(subparsers):
@@ -64,6 +72,13 @@ def add_update_all_command(subparsers):
     update_all_parser.set_defaults(func=update_all.run)
 
 
+def add_version_command(subparsers):
+    version_parser = subparsers.add_parser(
+        "version", help="Display the current version of GitBlend"
+    )
+    version_parser.set_defaults(func=version.run)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="gitblend", description="GitBlend - A Git utility tool"
@@ -76,6 +91,7 @@ def main():
     add_list_tags_command(subparsers)
     add_rename_tag_command(subparsers)
     add_update_all_command(subparsers)
+    add_version_command(subparsers)
 
     args = parser.parse_args()
 

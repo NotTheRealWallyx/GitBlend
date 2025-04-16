@@ -1,6 +1,7 @@
-import git
-from gitblend.commands import delete_tag, create_tag
+import sys
 from copy import deepcopy
+
+from gitblend.commands import create_tag, delete_tag
 
 
 def run(args):
@@ -20,3 +21,4 @@ def run(args):
     except Exception as e:
         print(f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}")
         sys.exit(1)
+        raise

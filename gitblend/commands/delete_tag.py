@@ -1,5 +1,7 @@
 import sys
-from git import Repo, GitCommandError
+
+from git import GitCommandError, Repo
+
 from gitblend.utils import handle_git_errors
 
 
