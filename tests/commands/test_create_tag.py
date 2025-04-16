@@ -1,5 +1,6 @@
 import pytest
 from git import GitCommandError
+
 from gitblend.commands import create_tag
 
 

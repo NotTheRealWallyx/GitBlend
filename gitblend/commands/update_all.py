@@ -1,5 +1,7 @@
 import os
-from git import Repo, InvalidGitRepositoryError
+
+from git import InvalidGitRepositoryError, Repo
+
 from gitblend.utils import handle_git_errors
 
 

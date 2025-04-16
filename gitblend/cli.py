@@ -1,9 +1,10 @@
 import argparse
 import sys
+
 from gitblend.commands import (
+    create_tag,
     delete_tag,
     list_tags,
-    create_tag,
     rename_tag,
     update_all,
     version,

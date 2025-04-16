@@ -1,5 +1,6 @@
 import sys
-from git import InvalidGitRepositoryError, GitCommandError
+
+from git import GitCommandError, InvalidGitRepositoryError
 
 
 def handle_git_errors(func):
