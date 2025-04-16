@@ -11,5 +11,9 @@ def run(args):
         print("✅ All files added to the commit.")
 
     message = args.message
-    subprocess.run([GIT_EXECUTABLE, "commit", "-m", message], text=True, check=True)
+    subprocess.run(
+        [GIT_EXECUTABLE, "commit", "--allow-empty", "-m", message],
+        text=True,
+        check=True,
+    )
     print(f"✅ Commit created successfully with message: '{message}'")

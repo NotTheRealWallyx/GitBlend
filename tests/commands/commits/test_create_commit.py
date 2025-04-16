@@ -19,7 +19,7 @@ class TestCreateCommitCommand(unittest.TestCase):
             run(args)
 
             mock_run.assert_called_once_with(
-                ["/usr/bin/git", "commit", "-m", "Initial commit"],
+                ["/usr/bin/git", "commit", "--allow-empty", "-m", "Initial commit"],
                 text=True,
                 check=True,
             )
@@ -57,7 +57,7 @@ class TestCreateCommitCommand(unittest.TestCase):
                 [GIT_EXECUTABLE, "add", "."], text=True, check=True
             )
             mock_run.assert_any_call(
-                [GIT_EXECUTABLE, "commit", "-m", "Initial commit"],
+                [GIT_EXECUTABLE, "commit", "--allow-empty", "-m", "Initial commit"],
                 text=True,
                 check=True,
             )
