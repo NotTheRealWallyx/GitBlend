@@ -24,6 +24,10 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - Updates repositories to the latest changes on the `main` branch.
   - Optionally skips repositories with uncommitted changes or those not on the `main` branch.
 
+- **Commit Management**: Simplify the process of creating commits with the `create-commit` command. This includes:
+  - Adding all files to the commit with the `--add` flag.
+  - Creating commits even when there are no changes using the `--allow-empty` flag.
+
 - **General Commands**: Access helpful utilities like:
   - Displaying the current version of GitBlend.
   - Viewing detailed help for all available commands.
@@ -72,6 +76,10 @@ After installation, you can use the `gitblend` command from your terminal, follo
 #### Repository Management
 
 - `gitblend update-all [--path <path>] [--only-clean]`: Update all Git repositories on your computer. Use `--only-clean` to skip repositories that are not on the `main` branch or have uncommitted changes.
+
+#### Commit Management
+
+- `gitblend create-commit --message "<commit_message>" [--add]`: Create a new Git commit with a message. Use `--add` to stage all files before committing.
 
 #### General
 
