@@ -2,7 +2,7 @@ import sys
 import unittest
 from unittest.mock import MagicMock, patch
 
-from gitblend.commands.tags.rename_tag import run
+from gitblend.commands.tags.rename import run
 
 
 class TestRenameTagCommand(unittest.TestCase):
