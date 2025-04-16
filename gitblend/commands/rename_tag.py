@@ -18,7 +18,15 @@ def run(args):
         create_tag.run(new_args)
 
         print(f"✅ Tag '{old_tag}' has been renamed to '{new_tag}' successfully.")
+    except SystemExit as e:
+        print(
+            f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e.code}",
+            file=sys.stderr,
+        )
+        sys.exit(e.code)
     except Exception as e:
-        print(f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}")
+        print(
+            f"❌ Error while renaming tag '{old_tag}' to '{new_tag}': {e}",
+            file=sys.stderr,
+        )
         sys.exit(1)
-        raise
