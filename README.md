@@ -25,6 +25,7 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - Optionally skips repositories with uncommitted changes or those not on the `main` branch.
 
 - **Commit Management**: Simplify the process of creating commits with the `create-commit` command. This includes:
+
   - Adding all files to the commit with the `--add` flag.
   - Creating commits even when there are no changes using the `--allow-empty` flag.
 
@@ -63,6 +64,13 @@ This script will:
 ## Usage
 
 After installation, you can use the `gitblend` command from your terminal, followed by the desired command.
+
+> **Note**: You can also use the shorthand `gib` instead of `gitblend` for all commands. For example:
+>
+> ```bash
+> gib list-tags
+> gib create-tag v1.2.0 --message "Release v1.2.0"
+> ```
 
 ### Available Commands
 

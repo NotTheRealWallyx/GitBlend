@@ -11,6 +11,7 @@ toml = "^0.10.2"
 
 [tool.poetry.scripts]
 gitblend = "gitblend.cli:main"
+gib = "gitblend.cli:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0"
