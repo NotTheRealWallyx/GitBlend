@@ -37,6 +37,12 @@ class TestCLI(unittest.TestCase):
         main()
         mock_rename_tag.assert_called_once()
 
+    @patch("gitblend.commands.commits.create.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "commit", "-m", "Innitial commit"])
+    def test_commit_command(self, mock_revert):
+        main()
+        mock_revert.assert_called_once()
+
     @patch("gitblend.commands.commits.revert.run", side_effect=mock_run)
     @patch("sys.argv", ["gitblend", "revert", "3", "--push"])
     def test_revert_command(self, mock_revert):
