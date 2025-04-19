@@ -1,12 +1,5 @@
 name: Test Installer and Uninstaller
 
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
-#   workflow_dispatch:
-
 on: [workflow_call, workflow_dispatch]
 
 jobs:
