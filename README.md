@@ -87,7 +87,7 @@ After installation, you can use the `gitblend` command from your terminal, follo
 
 #### Commit Management
 
-- `gitblend commit --message "<commit_message>" [--add]`: Create a new Git commit with a message. Use `--add` to stage all files before committing.
+- `gitblend commit --message "<commit_message>" [--add] [--sign]`: Create a new Git commit with a message. Use `--add` to stage all files before committing. Use `--sign` to sign the commit with your GPG key.
 
 #### General
 

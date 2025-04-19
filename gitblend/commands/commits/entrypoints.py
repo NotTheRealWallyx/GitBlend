@@ -14,6 +14,12 @@ def add_create_commit_command(subparsers):
         action="store_true",
         help="Add all files to the commit (equivalent to 'git add .')",
     )
+    create_commit_parser.add_argument(
+        "-s",
+        "--sign",
+        action="store_true",
+        help="Sign the commit with the user's GPG key",
+    )
     create_commit_parser.set_defaults(func=create.run)
 
 
