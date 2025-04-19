@@ -8,7 +8,8 @@ def mock_run(args):
     print(f"Command executed with args: {args}")
 
 
-class TestCLI(unittest.TestCase):
+class TestTagCommands(unittest.TestCase):
+    """Test the command routing for tags."""
 
     @patch("gitblend.commands.tags.create.run", side_effect=mock_run)
     @patch(
@@ -37,11 +38,32 @@ class TestCLI(unittest.TestCase):
         main()
         mock_rename_tag.assert_called_once()
 
+
+class TestCommitsCommands(unittest.TestCase):
+    """Test the command routing for commits."""
+
+    @patch("gitblend.commands.commits.create.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "commit", "-m", "Innitial commit"])
+    def test_commit_command(self, mock_revert):
+        main()
+        mock_revert.assert_called_once()
+
     @patch("gitblend.commands.commits.revert.run", side_effect=mock_run)
     @patch("sys.argv", ["gitblend", "revert", "3", "--push"])
     def test_revert_command(self, mock_revert):
         main()
         mock_revert.assert_called_once()
+
+
+class TestGeneralCommands(unittest.TestCase):
+    """Test the command routing for general commands."""
+
+    @patch("gitblend.commands.version.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "version"])
+    def test_version_command(self, mock_version):
+        """Test the version command routing."""
+        main()
+        mock_version.assert_called_once()
 
     def test_update_all_command(self):
         """Test the update-all command routing."""
