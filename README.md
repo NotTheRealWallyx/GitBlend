@@ -1,6 +1,6 @@
 # GitBlend
 
-[![Builds](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/ci_entrypoint.yml) [![CodeFactor](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend/badge)](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend)
+[![Builds](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/ci_entrypoint.yml) [![CodeFactor](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend/badge)](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend) [![codecov](https://codecov.io/gh/NotTheRealWallyx/GitBlend/graph/badge.svg?token=SBBL3LT6AK)](https://codecov.io/gh/NotTheRealWallyx/GitBlend)
 
 ![GitBlend image](assets/images/gitblend_image.png)
 
