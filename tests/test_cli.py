@@ -43,6 +43,13 @@ class TestCLI(unittest.TestCase):
         main()
         mock_revert.assert_called_once()
 
+    @patch("gitblend.commands.version.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "version"])
+    def test_version_command(self, mock_version):
+        """Test the version command routing."""
+        main()
+        mock_version.assert_called_once()
+
     def test_update_all_command(self):
         """Test the update-all command routing."""
         args = ["update-all", "--path", "/mock/path"]
