@@ -1,7 +1,5 @@
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from gitblend.commands.remote_management import set_remote_url
 
 
