@@ -29,6 +29,11 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - Adding all files to the commit with the `--add` flag.
   - Creating commits even when there are no changes using the `--allow-empty` flag.
 
+- **Remote Management**: Easily manage your repository remotes with dedicated commands.
+
+  - View all configured Git remotes and their URLs with a single command.
+  - Change the URL of any remote (e.g., origin) directly from the CLI.
+
 - **General Commands**: Access helpful utilities like:
   - Displaying the current version of GitBlend.
   - Viewing detailed help for all available commands.
@@ -80,6 +85,11 @@ After installation, you can use the `gitblend` command from your terminal, follo
 - `gitblend create-tag <tag_name> --message "<tag_message>" [--push]`: Create a new Git tag with an optional push to the remote repository.
 - `gitblend delete-tag <tag_name>`: Delete a Git tag both locally and remotely.
 - `gitblend rename-tag <old_tag> <new_tag>`: Rename an existing Git tag both locally and remotely.
+
+#### Remote Management
+
+- `gitblend show-remotes`: Show all Git remotes for the current repository.
+- `gitblend set-remote-url <remote> <url>`: Change the URL of a Git remote (e.g., origin).
 
 #### Repository Management
 
