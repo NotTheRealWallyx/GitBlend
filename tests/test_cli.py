@@ -92,5 +92,31 @@ class TestGeneralCommands(unittest.TestCase):
             assert called_args.path is None
 
 
+class TestRemoteManagementCommands(unittest.TestCase):
+    """Test the command routing for remote management commands."""
+
+    @patch("gitblend.commands.remote_management.show_remotes.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "show-remotes"])
+    def test_show_remotes_command(self, mock_show_remotes):
+        main()
+        mock_show_remotes.assert_called_once()
+
+    @patch(
+        "gitblend.commands.remote_management.set_remote_url.run", side_effect=mock_run
+    )
+    @patch(
+        "sys.argv",
+        [
+            "gitblend",
+            "set-remote-url",
+            "origin",
+            "https://github.com/user/new-repo.git",
+        ],
+    )
+    def test_set_remote_url_command(self, mock_set_remote_url):
+        main()
+        mock_set_remote_url.assert_called_once()
+
+
 if __name__ == "__main__":
     unittest.main()

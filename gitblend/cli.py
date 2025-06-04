@@ -3,6 +3,9 @@ import sys
 
 from gitblend.commands import update_all, version
 from gitblend.commands.commits.entrypoints import add_commits_commands
+from gitblend.commands.remote_management.entrypoints import (
+    add_remote_management_commands,
+)
 from gitblend.commands.tags.entrypoints import add_tags_commands
 
 
@@ -39,6 +42,7 @@ def main():
 
     add_tags_commands(subparsers)
     add_commits_commands(subparsers)
+    add_remote_management_commands(subparsers)
 
     add_update_all_command(subparsers)
     add_version_command(subparsers)
