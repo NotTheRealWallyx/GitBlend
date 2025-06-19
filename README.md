@@ -119,7 +119,7 @@ This script will:
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the GNU GPL v3. See the LICENSE file for details.
 
 ## Contributing
 
