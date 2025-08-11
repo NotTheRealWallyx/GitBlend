@@ -18,7 +18,7 @@ gib = "gitblend.cli:main"
 pytest = "^8.4"
 pytest-mock = "^3.14"
 black = "^25.1.0"
-pre-commit = "^4.2.0"
+pre-commit = "^4.3.0"
 isort = "^6.0.1"
 
 [build-system]
