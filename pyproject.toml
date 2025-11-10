@@ -17,7 +17,7 @@ gib = "gitblend.cli:main"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4"
 pytest-mock = "^3.15"
-black = "^25.9.0"
+black = "^25.11.0"
 pre-commit = "^4.3.0"
 isort = "^6.1.0"
 
