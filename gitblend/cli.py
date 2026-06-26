@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from gitblend.commands import update_all, version
+from gitblend.commands import self_update, update_all, version
 from gitblend.commands.commits.entrypoints import add_commits_commands
 from gitblend.commands.remote_management.entrypoints import (
     add_remote_management_commands,
@@ -33,6 +33,13 @@ def add_version_command(subparsers):
     version_parser.set_defaults(func=version.run)
 
 
+def add_self_update_command(subparsers):
+    self_update_parser = subparsers.add_parser(
+        "self-update", help="Update GitBlend to the latest version"
+    )
+    self_update_parser.set_defaults(func=self_update.run)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="gitblend", description="GitBlend - A Git utility tool"
@@ -46,6 +53,7 @@ def main():
 
     add_update_all_command(subparsers)
     add_version_command(subparsers)
+    add_self_update_command(subparsers)
 
     args = parser.parse_args()
 
