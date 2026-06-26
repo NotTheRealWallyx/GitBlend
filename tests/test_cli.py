@@ -65,6 +65,18 @@ class TestGeneralCommands(unittest.TestCase):
         main()
         mock_version.assert_called_once()
 
+    @patch("sys.argv", ["gitblend"])
+    def test_no_command_exits(self):
+        """Test that no subcommand prints help and exits."""
+        with self.assertRaises(SystemExit):
+            main()
+
+    @patch("gitblend.commands.self_update.run", side_effect=mock_run)
+    @patch("sys.argv", ["gitblend", "self-update"])
+    def test_self_update_command(self, mock_self_update):
+        main()
+        mock_self_update.assert_called_once()
+
     def test_update_all_command(self):
         """Test the update-all command routing."""
         args = ["update-all", "--path", "/mock/path"]

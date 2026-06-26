@@ -66,3 +66,44 @@ class TestSelfUpdateRun(TestCase):
     def test_exits_on_git_pull_failure(self, _get, _isdir, _run):
         with self.assertRaises(SystemExit):
             run(self._make_args())
+
+    @mock.patch("subprocess.run")
+    @mock.patch("os.path.isdir", return_value=True)
+    @mock.patch(
+        "gitblend.commands.self_update.get_repo_path", return_value="/fake/repo"
+    )
+    def test_exits_on_poetry_build_failure(self, _get, _isdir, mock_run):
+        def fail_on_poetry(cmd, **kwargs):
+            if cmd[0] == "poetry":
+                raise subprocess.CalledProcessError(1, "poetry")
+            return mock.Mock()
+
+        mock_run.side_effect = fail_on_poetry
+        with self.assertRaises(SystemExit):
+            run(self._make_args())
+
+    @mock.patch("subprocess.run")
+    @mock.patch("os.listdir", return_value=[])
+    @mock.patch("os.path.isdir", return_value=True)
+    @mock.patch(
+        "gitblend.commands.self_update.get_repo_path", return_value="/fake/repo"
+    )
+    def test_exits_when_no_tarball_found(self, _get, _isdir, _listdir, _run):
+        with self.assertRaises(SystemExit):
+            run(self._make_args())
+
+    @mock.patch("subprocess.run")
+    @mock.patch("os.listdir", return_value=["gitblend-0.1.0.tar.gz"])
+    @mock.patch("os.path.isdir", return_value=True)
+    @mock.patch(
+        "gitblend.commands.self_update.get_repo_path", return_value="/fake/repo"
+    )
+    def test_exits_on_pipx_failure(self, _get, _isdir, _listdir, mock_run):
+        def fail_on_pipx(cmd, **kwargs):
+            if cmd[0] == "pipx":
+                raise subprocess.CalledProcessError(1, "pipx")
+            return mock.Mock()
+
+        mock_run.side_effect = fail_on_pipx
+        with self.assertRaises(SystemExit):
+            run(self._make_args())
