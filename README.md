@@ -11,7 +11,6 @@ GitBlend is a Git utility tool that combines Git and GitHub commands to streamli
 GitBlend is a versatile tool designed to simplify your Git and GitHub workflows. Here are some of the key features:
 
 - **Tag Management**: Manage Git tags effortlessly with commands to create, delete, rename, and list tags. Whether you need to annotate a release, clean up old tags, or rename an existing tag, GitBlend provides a streamlined interface for these operations.
-
   - Create annotated tags with custom messages.
   - Push tags to remote repositories.
   - Delete tags both locally and remotely.
@@ -19,18 +18,15 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - List all tags in your repository.
 
 - **Repository Management**: Keep your repositories up-to-date with the `update-all` command. This command:
-
   - Recursively finds all Git repositories on your computer.
   - Updates repositories to the latest changes on the `main` branch.
   - Optionally skips repositories with uncommitted changes or those not on the `main` branch.
 
 - **Commit Management**: Simplify the process of creating commits with the `commit` command. This includes:
-
   - Adding all files to the commit with the `--add` flag.
   - Creating commits even when there are no changes using the `--allow-empty` flag.
 
 - **Remote Management**: Easily manage your repository remotes with dedicated commands.
-
   - View all configured Git remotes and their URLs with a single command.
   - Change the URL of any remote (e.g., origin) directly from the CLI.
 
@@ -103,6 +99,7 @@ After installation, you can use the `gitblend` command from your terminal, follo
 #### General
 
 - `gitblend --help`: Show help information for the GitBlend CLI.
+- `gitblend self-update`: Pull the latest changes from the source repo and reinstall GitBlend.
 
 ## Uninstallation
 
