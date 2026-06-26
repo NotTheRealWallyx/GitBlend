@@ -36,7 +36,7 @@ fi
 echo "Saving repo path for self-update..."
 GITBLEND_CONFIG_DIR="$HOME/.config/gitblend"
 mkdir -p "$GITBLEND_CONFIG_DIR"
-echo "$(pwd)" > "$GITBLEND_CONFIG_DIR/repo_path"
+pwd > "$GITBLEND_CONFIG_DIR/repo_path"
 echo "Repo path saved to $GITBLEND_CONFIG_DIR/repo_path"
 
 echo "Cleaning up..."
