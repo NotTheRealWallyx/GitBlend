@@ -93,7 +93,7 @@ After installation, you can use the `gitblend` command from your terminal, follo
 
 #### Commit Management
 
-- `gitblend commit "<commit_message>" [--add] [--sign]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing. Use `--sign` to sign the commit with your GPG key. Both flags can be enabled by default via the [configuration file](#configuration).
+- `gitblend commit "<commit_message>" [--add] [--sign] [--allow-empty]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing, `--sign` to sign the commit with your GPG key, and `--allow-empty` to create a commit even when there are no changes. All three flags can be enabled by default via the [configuration file](#configuration).
 - `gitblend revert <number_of_commits> [--push]`: Revert the last specified number of commits. Use `--push` to push the changes to the remote repository after reverting.
 
 #### General
@@ -107,8 +107,9 @@ GitBlend reads an optional configuration file at `~/.gitblend.toml` where you ca
 
 ```toml
 [commit]
-add = true  # Always stage all files before committing (same as --add)
-sign = true # Always sign commits with your GPG key (same as --sign)
+add = true         # Always stage all files before committing (same as --add)
+sign = true        # Always sign commits with your GPG key (same as --sign)
+allow_empty = true # Always allow empty commits (same as --allow-empty)
 ```
 
 With the configuration above, these two commands are equivalent:

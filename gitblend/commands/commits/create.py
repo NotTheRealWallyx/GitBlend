@@ -19,7 +19,10 @@ def run(args):
         subprocess.run([GIT_EXECUTABLE, "add", "."], text=True, check=True)
         print("✅ All files added to the commit.")
 
-    commit_command = [GIT_EXECUTABLE, "commit", "--allow-empty", "-m", message]
+    commit_command = [GIT_EXECUTABLE, "commit", "-m", message]
+
+    if args.allow_empty:
+        commit_command.append("--allow-empty")
 
     if args.sign:
         commit_command.append("--gpg-sign")

@@ -29,10 +29,17 @@ def add_create_commit_command(subparsers):
         action="store_true",
         help="Sign the commit with the user's GPG key",
     )
+    create_commit_parser.add_argument(
+        "-e",
+        "--allow-empty",
+        action="store_true",
+        help="Allow creating a commit even when there are no changes",
+    )
     create_commit_parser.set_defaults(
         func=create.run,
         add=bool(commit_config.get("add", False)),
         sign=bool(commit_config.get("sign", False)),
+        allow_empty=bool(commit_config.get("allow_empty", False)),
     )
 
 

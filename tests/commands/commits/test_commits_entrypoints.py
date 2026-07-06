@@ -22,10 +22,11 @@ class TestCommitEntrypoints(unittest.TestCase):
         self.assertEqual(args.message, "Initial commit")
         self.assertFalse(args.add)
         self.assertFalse(args.sign)
+        self.assertFalse(args.allow_empty)
 
     @patch(
         "gitblend.commands.commits.entrypoints.load_config",
-        return_value={"commit": {"add": True, "sign": True}},
+        return_value={"commit": {"add": True, "sign": True, "allow_empty": True}},
     )
     def test_commit_flags_default_from_config(self, mock_config):
         parser = build_parser()
@@ -34,6 +35,7 @@ class TestCommitEntrypoints(unittest.TestCase):
         self.assertEqual(args.positional_message, "Initial commit")
         self.assertTrue(args.add)
         self.assertTrue(args.sign)
+        self.assertTrue(args.allow_empty)
 
     @patch("gitblend.commands.commits.entrypoints.load_config", return_value={})
     def test_commit_accepts_positional_message(self, mock_config):
