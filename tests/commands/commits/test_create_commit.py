@@ -13,13 +13,15 @@ class TestCreateCommitCommand(unittest.TestCase):
     def test_create_commit_success(self, mock_run):
         mock_run.return_value = MagicMock(returncode=0)
 
-        args = MagicMock(message="Initial commit", add=False, sign=False)
+        args = MagicMock(
+            message="Initial commit", add=False, sign=False, allow_empty=False
+        )
 
         with patch("builtins.print") as mock_print:
             run(args)
 
             mock_run.assert_called_once_with(
-                [GIT_EXECUTABLE, "commit", "--allow-empty", "-m", "Initial commit"],
+                [GIT_EXECUTABLE, "commit", "-m", "Initial commit"],
                 text=True,
                 check=True,
             )
@@ -48,7 +50,9 @@ class TestCreateCommitCommand(unittest.TestCase):
     def test_create_commit_with_add(self, mock_run):
         mock_run.return_value = MagicMock(returncode=0)
 
-        args = MagicMock(message="Initial commit", add=True, sign=False)
+        args = MagicMock(
+            message="Initial commit", add=True, sign=False, allow_empty=False
+        )
 
         with patch("builtins.print") as mock_print:
             run(args)
@@ -57,7 +61,7 @@ class TestCreateCommitCommand(unittest.TestCase):
                 [GIT_EXECUTABLE, "add", "."], text=True, check=True
             )
             mock_run.assert_any_call(
-                [GIT_EXECUTABLE, "commit", "--allow-empty", "-m", "Initial commit"],
+                [GIT_EXECUTABLE, "commit", "-m", "Initial commit"],
                 text=True,
                 check=True,
             )
@@ -67,10 +71,50 @@ class TestCreateCommitCommand(unittest.TestCase):
             )
 
     @patch("subprocess.run")
+    def test_create_commit_without_message(self, mock_run):
+        args = MagicMock(message=None, positional_message=None)
+
+        with patch("builtins.print") as mock_print:
+            with self.assertRaises(SystemExit):
+                run(args)
+
+            mock_print.assert_any_call(
+                "❌ A commit message is required (pass it as an argument or with -m).",
+                file=sys.stderr,
+            )
+        mock_run.assert_not_called()
+
+    @patch("subprocess.run")
+    def test_create_commit_with_positional_message(self, mock_run):
+        mock_run.return_value = MagicMock(returncode=0)
+
+        args = MagicMock(
+            message=None,
+            positional_message="Initial commit",
+            add=False,
+            sign=False,
+            allow_empty=False,
+        )
+
+        with patch("builtins.print") as mock_print:
+            run(args)
+
+            mock_run.assert_called_once_with(
+                [GIT_EXECUTABLE, "commit", "-m", "Initial commit"],
+                text=True,
+                check=True,
+            )
+            mock_print.assert_any_call(
+                "✅ Commit created successfully with message: 'Initial commit'"
+            )
+
+    @patch("subprocess.run")
     def test_create_commit_with_sign(self, mock_run):
         mock_run.return_value = MagicMock(returncode=0)
 
-        args = MagicMock(message="Initial commit", sign=True)
+        args = MagicMock(
+            message="Initial commit", add=True, sign=True, allow_empty=True
+        )
 
         with patch("builtins.print") as mock_print:
             run(args)
@@ -79,9 +123,9 @@ class TestCreateCommitCommand(unittest.TestCase):
                 [
                     GIT_EXECUTABLE,
                     "commit",
-                    "--allow-empty",
                     "-m",
                     "Initial commit",
+                    "--allow-empty",
                     "--gpg-sign",
                 ],
                 text=True,

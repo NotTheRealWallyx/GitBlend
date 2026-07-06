@@ -93,13 +93,34 @@ After installation, you can use the `gitblend` command from your terminal, follo
 
 #### Commit Management
 
-- `gitblend commit --message "<commit_message>" [--add] [--sign]`: Create a new Git commit with a message. Use `--add` to stage all files before committing. Use `--sign` to sign the commit with your GPG key.
+- `gitblend commit "<commit_message>" [--add] [--sign] [--allow-empty]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing, `--sign` to sign the commit with your GPG key, and `--allow-empty` to create a commit even when there are no changes. All three flags can be enabled by default via the [configuration file](#configuration).
 - `gitblend revert <number_of_commits> [--push]`: Revert the last specified number of commits. Use `--push` to push the changes to the remote repository after reverting.
 
 #### General
 
 - `gitblend --help`: Show help information for the GitBlend CLI.
+- `gitblend setup [--force]`: Interactively create the [configuration file](#configuration). Use `--force` to overwrite an existing one without asking.
 - `gitblend self-update`: Pull the latest changes from the source repo and reinstall GitBlend.
+
+## Configuration
+
+GitBlend reads an optional configuration file at `~/.gitblend.toml` where you can set default behavior, so you don't have to pass the same flags on every invocation.
+
+The easiest way to create it is running `gib setup`, which asks a few yes/no questions and writes the file for you (the install script also offers this on a fresh install). Alternatively, create it by hand:
+
+```toml
+[commit]
+add = true         # Always stage all files before committing (same as --add)
+sign = true        # Always sign commits with your GPG key (same as --sign)
+allow_empty = true # Always allow empty commits (same as --allow-empty)
+```
+
+With the configuration above, these two commands are equivalent:
+
+```bash
+gib commit "My commit message"
+gib commit -s -a -m "My commit message"
+```
 
 ## Uninstallation
 
