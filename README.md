@@ -2,9 +2,20 @@
 
 [![Builds](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/check_test.yml/badge.svg)](https://github.com/NotTheRealWallyx/GitBlend/actions/workflows/ci_entrypoint.yml) [![CodeFactor](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend/badge)](https://www.codefactor.io/repository/github/nottherealwallyx/gitblend) [![codecov](https://codecov.io/gh/NotTheRealWallyx/GitBlend/graph/badge.svg?token=SBBL3LT6AK)](https://codecov.io/gh/NotTheRealWallyx/GitBlend)
 
-![GitBlend image](assets/images/gitblend_image.png)
+![gib image](assets/images/gib_image.svg)
 
-GitBlend is a Git utility tool that combines Git and GitHub commands to streamline your workflow. It provides a simple CLI interface for managing Git operations, such as deleting tags both locally and remotely.
+GitBlend (`gib` for short) is a Git utility tool that combines Git and GitHub commands to streamline your workflow. It provides a simple CLI interface for managing Git operations such as tags, commits, remotes, and multi-repo updates.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Available Commands](#available-commands)
+- [Configuration](#configuration)
+- [Uninstallation](#uninstallation)
+- [License](#license)
+- [Contributing](#contributing)
 
 ## Features
 
@@ -47,7 +58,7 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/mikelsanchez/GitBlend.git
+git clone https://github.com/NotTheRealWallyx/GitBlend.git
 cd GitBlend
 ```
 
@@ -64,43 +75,44 @@ This script will:
 
 ## Usage
 
-After installation, you can use the `gitblend` command from your terminal, followed by the desired command.
+After installation, use the `gib` command from your terminal, followed by the desired command:
 
-> **Note**: You can also use the shorthand `gib` instead of `gitblend` for all commands. For example:
->
-> ```bash
-> gib list-tags
-> gib create-tag v1.2.0 --message "Release v1.2.0"
-> ```
+```bash
+gib list-tags
+gib create-tag v1.2.0 --message "Release v1.2.0"
+```
+
+> **Note**: The full name `gitblend` also works as an alias for every command below, if you prefer to type it out.
 
 ### Available Commands
 
 #### Tag Management
 
-- `gitblend list-tags`: List all Git tags in the current repository.
-- `gitblend create-tag <tag_name> --message "<tag_message>" [--push]`: Create a new Git tag with an optional push to the remote repository.
-- `gitblend delete-tag <tag_name>`: Delete a Git tag both locally and remotely.
-- `gitblend rename-tag <old_tag> <new_tag>`: Rename an existing Git tag both locally and remotely.
+- `gib list-tags`: List all Git tags in the current repository.
+- `gib create-tag <tag_name> --message "<tag_message>" [--push]`: Create a new Git tag with an optional push to the remote repository.
+- `gib delete-tag <tag_name>`: Delete a Git tag both locally and remotely.
+- `gib rename-tag <old_tag> <new_tag>`: Rename an existing Git tag both locally and remotely.
 
 #### Remote Management
 
-- `gitblend show-remotes`: Show all Git remotes for the current repository.
-- `gitblend set-remote-url <remote> <url>`: Change the URL of a Git remote (e.g., origin).
+- `gib show-remotes`: Show all Git remotes for the current repository.
+- `gib set-remote-url <remote> <url>`: Change the URL of a Git remote (e.g., origin).
 
 #### Repository Management
 
-- `gitblend update-all [--path <path>] [--only-clean]`: Update all Git repositories on your computer. Use `--only-clean` to skip repositories that are not on the `main` branch or have uncommitted changes.
+- `gib update-all [--path <path>] [--only-clean]`: Update all Git repositories on your computer. Use `--only-clean` to skip repositories that are not on the `main` branch or have uncommitted changes.
 
 #### Commit Management
 
-- `gitblend commit "<commit_message>" [--add] [--sign] [--allow-empty]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing, `--sign` to sign the commit with your GPG key, and `--allow-empty` to create a commit even when there are no changes. All three flags can be enabled by default via the [configuration file](#configuration).
-- `gitblend revert <number_of_commits> [--push]`: Revert the last specified number of commits. Use `--push` to push the changes to the remote repository after reverting.
+- `gib commit "<commit_message>" [--add] [--sign] [--allow-empty]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing, `--sign` to sign the commit with your GPG key, and `--allow-empty` to create a commit even when there are no changes. All three flags can be enabled by default via the [configuration file](#configuration).
+- `gib revert <number_of_commits> [--push]`: Revert the last specified number of commits. Use `--push` to push the changes to the remote repository after reverting.
 
 #### General
 
-- `gitblend --help`: Show help information for the GitBlend CLI.
-- `gitblend setup [--force]`: Interactively create the [configuration file](#configuration). Use `--force` to overwrite an existing one without asking.
-- `gitblend self-update`: Pull the latest changes from the source repo and reinstall GitBlend.
+- `gib --help`: Show help information for the GitBlend CLI.
+- `gib version`: Display the current version of GitBlend.
+- `gib setup [--force]`: Interactively create the [configuration file](#configuration). Use `--force` to overwrite an existing one without asking.
+- `gib self-update`: Pull the latest changes from the source repo and reinstall GitBlend.
 
 ## Configuration
 
@@ -141,4 +153,4 @@ This project is licensed under the GNU GPL v3. See the LICENSE file for details.
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+Contributions are welcome! Feel free to open issues or submit pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, code style guidelines, and the PR process.
