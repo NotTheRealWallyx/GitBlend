@@ -93,13 +93,30 @@ After installation, you can use the `gitblend` command from your terminal, follo
 
 #### Commit Management
 
-- `gitblend commit --message "<commit_message>" [--add] [--sign]`: Create a new Git commit with a message. Use `--add` to stage all files before committing. Use `--sign` to sign the commit with your GPG key.
+- `gitblend commit "<commit_message>" [--add] [--sign]`: Create a new Git commit with a message (also accepted via `-m`/`--message`). Use `--add` to stage all files before committing. Use `--sign` to sign the commit with your GPG key. Both flags can be enabled by default via the [configuration file](#configuration).
 - `gitblend revert <number_of_commits> [--push]`: Revert the last specified number of commits. Use `--push` to push the changes to the remote repository after reverting.
 
 #### General
 
 - `gitblend --help`: Show help information for the GitBlend CLI.
 - `gitblend self-update`: Pull the latest changes from the source repo and reinstall GitBlend.
+
+## Configuration
+
+GitBlend reads an optional configuration file at `~/.gitblend.toml` where you can set default behavior, so you don't have to pass the same flags on every invocation.
+
+```toml
+[commit]
+add = true  # Always stage all files before committing (same as --add)
+sign = true # Always sign commits with your GPG key (same as --sign)
+```
+
+With the configuration above, these two commands are equivalent:
+
+```bash
+gib commit "My commit message"
+gib commit -s -a -m "My commit message"
+```
 
 ## Uninstallation
 
