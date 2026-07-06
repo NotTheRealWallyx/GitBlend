@@ -42,4 +42,12 @@ echo "Repo path saved to $GITBLEND_CONFIG_DIR/repo_path"
 echo "Cleaning up..."
 rm -rf $DIST_DIR
 
+if [ ! -f "$HOME/.gitblend.toml" ] && [ -t 0 ]; then
+  read -r -p "No GitBlend configuration found. Create one now? [y/N]: " CREATE_CONFIG
+  case "$CREATE_CONFIG" in
+    [yY]|[yY][eE][sS]) gib setup ;;
+    *) echo "You can create it later by running 'gib setup'." ;;
+  esac
+fi
+
 echo "Installation completed."

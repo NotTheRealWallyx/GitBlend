@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from gitblend.commands import self_update, update_all, version
+from gitblend.commands import self_update, setup, update_all, version
 from gitblend.commands.commits.entrypoints import add_commits_commands
 from gitblend.commands.remote_management.entrypoints import (
     add_remote_management_commands,
@@ -33,6 +33,18 @@ def add_version_command(subparsers):
     version_parser.set_defaults(func=version.run)
 
 
+def add_setup_command(subparsers):
+    setup_parser = subparsers.add_parser(
+        "setup", help="Interactively create the GitBlend configuration file"
+    )
+    setup_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite an existing configuration file without asking",
+    )
+    setup_parser.set_defaults(func=setup.run)
+
+
 def add_self_update_command(subparsers):
     self_update_parser = subparsers.add_parser(
         "self-update", help="Update GitBlend to the latest version"
@@ -52,6 +64,7 @@ def main():
     add_remote_management_commands(subparsers)
 
     add_update_all_command(subparsers)
+    add_setup_command(subparsers)
     add_version_command(subparsers)
     add_self_update_command(subparsers)
 
