@@ -34,8 +34,10 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - Optionally skips repositories with uncommitted changes or those not on the `main` branch.
 
 - **Commit Management**: Simplify the process of creating commits with the `commit` command. This includes:
-  - Adding all files to the commit with the `--add` flag.
-  - Creating commits even when there are no changes using the `--allow-empty` flag.
+  - Staging all files before committing with the `--add` flag.
+  - Signing commits with your GPG key using the `--sign` flag.
+  - Allowing commits with no staged changes using the `--allow-empty` flag.
+  - Setting any of the above as persistent defaults with `gib setup`, so you don't have to pass the flags on every commit.
 
 - **Remote Management**: Easily manage your repository remotes with dedicated commands.
   - View all configured Git remotes and their URLs with a single command.
