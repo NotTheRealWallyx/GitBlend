@@ -2,6 +2,7 @@ import argparse
 import sys
 
 from gitblend.commands import self_update, setup, update_all, version
+from gitblend.commands.branches.entrypoints import add_branches_commands
 from gitblend.commands.commits.entrypoints import add_commits_commands
 from gitblend.commands.remote_management.entrypoints import (
     add_remote_management_commands,
@@ -62,6 +63,7 @@ def main():
     add_tags_commands(subparsers)
     add_commits_commands(subparsers)
     add_remote_management_commands(subparsers)
+    add_branches_commands(subparsers)
 
     add_update_all_command(subparsers)
     add_setup_command(subparsers)

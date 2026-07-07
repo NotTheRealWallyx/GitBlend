@@ -43,6 +43,9 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - View all configured Git remotes and their URLs with a single command.
   - Change the URL of any remote (e.g., origin) directly from the CLI.
 
+- **Branch Management**: Quickly inspect your repository's branches.
+  - List all local Git branches with a single command.
+
 - **General Commands**: Access helpful utilities like:
   - Displaying the current version of GitBlend.
   - Viewing detailed help for all available commands.
@@ -102,6 +105,10 @@ gib create-tag v1.2.0 --message "Release v1.2.0"
 
 - `gib show-remotes`: Show all Git remotes for the current repository.
 - `gib set-remote-url <remote> <url>`: Change the URL of a Git remote (e.g., origin).
+
+#### Branch Management
+
+- `gib show-branches`: Show all local Git branches for the current repository.
 
 #### Repository Management
 
