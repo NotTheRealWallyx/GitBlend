@@ -34,8 +34,10 @@ GitBlend is a versatile tool designed to simplify your Git and GitHub workflows.
   - Optionally skips repositories with uncommitted changes or those not on the `main` branch.
 
 - **Commit Management**: Simplify the process of creating commits with the `commit` command. This includes:
-  - Adding all files to the commit with the `--add` flag.
-  - Creating commits even when there are no changes using the `--allow-empty` flag.
+  - Staging all files before committing with the `--add` flag.
+  - Signing commits with your GPG key using the `--sign` flag.
+  - Allowing commits with no staged changes using the `--allow-empty` flag.
+  - Setting any of the above as persistent defaults with `gib setup`, so you don't have to pass the flags on every commit.
 
 - **Remote Management**: Easily manage your repository remotes with dedicated commands.
   - View all configured Git remotes and their URLs with a single command.
@@ -71,7 +73,10 @@ cd GitBlend
 This script will:
 
 - Build the package using Poetry.
+- Install `pipx` via Homebrew first, if it isn't already installed.
 - Install the package using pipx.
+- Save the repository path to `~/.config/gitblend/repo_path`, so `gib self-update` knows where to pull future updates from. Keep the cloned repo where it is (or re-run the installer if you move it).
+- Offer to interactively run `gib setup` if no [configuration file](#configuration) exists yet.
 
 ## Usage
 
