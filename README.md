@@ -73,7 +73,10 @@ cd GitBlend
 This script will:
 
 - Build the package using Poetry.
+- Install `pipx` via Homebrew first, if it isn't already installed.
 - Install the package using pipx.
+- Save the repository path to `~/.config/gitblend/repo_path`, so `gib self-update` knows where to pull future updates from. Keep the cloned repo where it is (or re-run the installer if you move it).
+- Offer to interactively run `gib setup` if no [configuration file](#configuration) exists yet.
 
 ## Usage
 
